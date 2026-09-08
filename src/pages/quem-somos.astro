@@ -1,0 +1,106 @@
+---
+import SiteFooter from "@/components/SiteFooter.astro";
+import SiteHeader from "@/components/SiteHeader.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { siteConfig } from "@/config/site";
+
+const pageTitle = "Quem Somos";
+const pageDescription = "Conheça a equipe do Diário de Mochileiro e nossa metodologia de curadoria especializada de equipamentos de camping.";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <SiteHeader />
+  <main id="content" class="outer">
+    <div class="canvas">
+      <header class="pagehead">
+        <p class="eyebrow">Sobre Nós</p>
+        <h1 class="pagehead-title">Quem Somos</h1>
+        <p class="pagehead-description">
+          Conheça o Diário de Mochileiro e nossa metodologia transparente de curadoria.
+        </p>
+      </header>
+
+      <div class="prose">
+        <h2>Nossa Missão</h2>
+        <p>
+          O <strong>Diário de Mochileiro</strong> nasceu com o objetivo de ajudar acampadores e
+          mochileiros a encontrarem os melhores equipamentos sem precisar gastar uma fortuna ou
+          cair em promessas de marketing duvidosas. Sabemos que escolher o equipamento certo pode
+          ser complicado — por isso, existe uma equipe dedicada a fazer esse trabalho sujo por você.
+        </p>
+
+        <h2>Como Funciona Nossa Curadoria</h2>
+        <p>
+          Nossa metodologia é 100% baseada em <strong>curadoria especializada</strong>. Não
+          realizamos testes físicos proprietários de cada produto. Em vez disso, combinamos três
+          pilares para chegar às nossas recomendações:
+        </p>
+
+        <ul>
+          <li>
+            <strong>Análise de especificações técnicas:</strong> Verificamos dados dos fabricantes
+            como coluna d'água em mm, tipo de tecido (ripstop, nylon, poliéster), densidade de
+            isolantes, capacidade em litros, peso real e dimensões de cada equipamento.
+          </li>
+          <li>
+            <strong>Compilação de avaliações de compradores reais:</strong> Analisamos centenas
+            de avaliações em plataformas como Amazon, Shopee, Mercado Livre e Magazine Luiza para
+            identificar padrões de satisfação, problemas recorrentes e a opinião geral do mercado.
+          </li>
+          <li>
+            <strong>Relação custo-benefício:</strong> Combinamos dados técnicos e feedback do
+            mercado para recomendar produtos que oferecem a melhor relação entre qualidade e preço
+            para cada faixa de orçamento.
+          </li>
+        </ul>
+
+        <h2>Transparência Editorial</h2>
+        <p>
+          Acreditamos que confiança se constrói com transparência. Por isso, esclarecemos:
+        </p>
+        <ul>
+          <li>
+            Nossos links são de programas de afiliados. Quando você compra através deles, recebemos
+            uma comissão — <strong>sem custo adicional para você</strong>.
+          </li>
+          <li>
+            Nossas recomendações são baseadas em dados técnicos e avaliações reais, <strong>não
+            em qual produto paga mais comissão</strong>.
+          </li>
+          <li>
+            Nunca utilizamos frases como "testamos em nossa última viagem", pois não realizamos
+            testes físicos. Nosso trabalho é de <strong>curadoria e análise técnica</strong>.
+          </li>
+        </ul>
+
+        <h2>Nossos Valores</h2>
+        <ul>
+          <li>
+            <strong>Integridade:</strong> Recomendamos apenas produtos que genuinamente acreditamos
+            serem bons para nossos leitores.
+          </li>
+          <li>
+            <strong>Utilidade:</strong> Cada artigo e recomendação visa resolver um problema real
+            do acampador ou mochileiro.
+          </li>
+          <li>
+            <strong>Acessibilidade:</strong> Cobrimos opções para diferentes faixas de orçamento,
+            desde equipamentos básicos até opções premium.
+          </li>
+          <li>
+            <strong>Atualização:</strong> Revisamos nossas recomendações periodicamente para
+            garantir que continuam relevantes e com bom custo-benefício.
+          </li>
+        </ul>
+
+        <h2>Entre em Contato</h2>
+        <p>
+          Tem sugestões, correções ou quer conversar sobre parcerias? Acesse nossa
+          <a href="mailto:{siteConfig.email}">página de contato</a> ou envie um email diretamente
+          para <a href="mailto:{siteConfig.email}">{siteConfig.email}</a>.
+        </p>
+      </div>
+    </div>
+  </main>
+  <SiteFooter />
+</BaseLayout>

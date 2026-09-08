@@ -1,0 +1,109 @@
+---
+export interface FaqItem {
+  pergunta: string;
+  resposta: string;
+}
+
+interface Props {
+  titulo?: string;
+  itens: FaqItem[];
+}
+
+const { titulo = "Perguntas Frequentes", itens } = Astro.props;
+---
+
+<section id="faq" class="faq-section outer">
+  <div class="inner">
+    <h2 class="section-title">{titulo}</h2>
+    <div class="faq-list">
+      {itens.map((item, index) => (
+        <details class="faq-item" {...index === 0 ? { open: true } : {}}>
+          <summary class="faq-question">
+            <span>{item.pergunta}</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </summary>
+          <div class="faq-answer">
+            <p>{item.resposta}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    padding-top: var(--space-section);
+    padding-bottom: var(--space-section);
+  }
+
+  .faq-list {
+    display: grid;
+    gap: 0.5rem;
+    max-width: 48rem;
+  }
+
+  .faq-item {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    transition: border-color var(--duration) var(--ease-out);
+  }
+
+  .faq-item[open] {
+    border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+  }
+
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--foreground);
+    background: var(--background);
+    list-style: none;
+    transition: background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-question::marker {
+    display: none;
+    content: "";
+  }
+
+  .faq-question:hover {
+    background: var(--muted);
+  }
+
+  .faq-chevron {
+    width: 1.1rem;
+    height: 1.1rem;
+    flex-shrink: 0;
+    color: var(--muted-foreground);
+    transition: transform 0.25s var(--ease-out);
+  }
+
+  .faq-item[open] .faq-chevron {
+    transform: rotate(180deg);
+  }
+
+  .faq-answer {
+    padding: 0 1.25rem 1.25rem;
+    color: var(--muted-foreground);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .faq-answer p {
+    margin: 0;
+  }
+</style>

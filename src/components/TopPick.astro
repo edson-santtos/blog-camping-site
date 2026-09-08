@@ -1,0 +1,259 @@
+---
+export interface TopPickProps {
+  nome: string;
+  categoria: string;
+  imagem: string;
+  descricao: string;
+  pontosFortes: string[];
+  linkAfiliado: string;
+  plataforma: "Amazon" | "Shopee" | "Mercado Livre" | "Magalu" | "Outro";
+}
+
+interface Props {
+  produto: TopPickProps;
+}
+
+const { produto } = Astro.props;
+
+const plataformaConfig = {
+  Amazon: { label: "Ver Melhor Preço na Amazon", class: "btn-amazon" },
+  Shopee: { label: "Ver Oferta na Shopee", class: "btn-shopee" },
+  "Mercado Livre": { label: "Ver no Mercado Livre", class: "btn-mercadolivre" },
+  Magalu: { label: "Ver na Magalu", class: "btn-magalu" },
+  Outro: { label: "Ver Oferta", class: "btn-outro" },
+};
+
+const config = plataformaConfig[produto.plataforma];
+---
+
+<section class="top-pick-section outer">
+  <div class="inner">
+    <div class="top-pick-card">
+      <div class="top-pick-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="badge-icon">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        Melhor Custo-Benefício
+      </div>
+
+      <div class="top-pick-layout">
+        <div class="top-pick-image-wrapper">
+          <img
+            src={produto.imagem}
+            alt={produto.nome}
+            class="top-pick-image"
+            loading="lazy"
+          />
+          <span class="top-pick-category">{produto.categoria}</span>
+        </div>
+
+        <div class="top-pick-content">
+          <h3 class="top-pick-name">{produto.nome}</h3>
+          <p class="top-pick-description">{produto.descricao}</p>
+
+          <ul class="top-pick-features">
+            {produto.pontosFortes.map((ponto) => (
+              <li class="feature-item">
+                <svg class="feature-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                {ponto}
+              </li>
+            ))}
+          </ul>
+
+          <a
+            href={produto.linkAfiliado}
+            class={`affiliate-btn-top ${config.class}`}
+            target="_blank"
+            rel="sponsored nofollow noopener"
+          >
+            {config.label}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .top-pick-section {
+    padding-top: clamp(2rem, 4vw, 4rem);
+    padding-bottom: clamp(2rem, 4vw, 4rem);
+  }
+
+  .top-pick-card {
+    position: relative;
+    border: 2px solid color-mix(in srgb, var(--accent) 30%, var(--border));
+    border-radius: var(--radius-md);
+    background: var(--card);
+    overflow: hidden;
+  }
+
+  .top-pick-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.25rem;
+    background: var(--accent);
+    color: var(--accent-foreground);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .badge-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .top-pick-layout {
+    display: grid;
+    gap: 2rem;
+    padding: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .top-pick-layout {
+      grid-template-columns: 1fr 1.5fr;
+      padding: 2.5rem;
+    }
+  }
+
+  .top-pick-image-wrapper {
+    position: relative;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: var(--muted);
+  }
+
+  .top-pick-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    min-height: 16rem;
+  }
+
+  .top-pick-category {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    background: var(--background);
+    border: 1px solid var(--border);
+    padding: 0.25rem 0.6rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+    border-radius: var(--radius-full);
+  }
+
+  .top-pick-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .top-pick-name {
+    margin: 0;
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--foreground);
+  }
+
+  .top-pick-description {
+    margin: 0;
+    color: var(--muted-foreground);
+    font-size: 0.9375rem;
+    line-height: 1.65;
+  }
+
+  .top-pick-features {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--foreground);
+  }
+
+  .feature-check {
+    width: 1.1rem;
+    height: 1.1rem;
+    flex-shrink: 0;
+    color: var(--tip);
+    margin-top: 0.15rem;
+  }
+
+  .affiliate-btn-top {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 1.75rem;
+    margin-top: 0.5rem;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition:
+      background-color var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out);
+    align-self: flex-start;
+  }
+
+  .affiliate-btn-top:active {
+    transform: translateY(1px);
+  }
+
+  .btn-amazon {
+    background: #ff9900;
+    color: #111111;
+  }
+  .btn-amazon:hover {
+    background: #e68a00;
+  }
+
+  .btn-shopee {
+    background: #ee4d2d;
+    color: #ffffff;
+  }
+  .btn-shopee:hover {
+    background: #d64427;
+  }
+
+  .btn-mercadolivre {
+    background: #ffe600;
+    color: #2d3277;
+  }
+  .btn-mercadolivre:hover {
+    background: #e6d000;
+  }
+
+  .btn-magalu {
+    background: #0086ff;
+    color: #ffffff;
+  }
+  .btn-magalu:hover {
+    background: #0077e6;
+  }
+
+  .btn-outro {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+  .btn-outro:hover {
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
+</style>

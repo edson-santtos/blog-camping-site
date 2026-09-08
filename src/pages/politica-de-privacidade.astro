@@ -1,0 +1,142 @@
+---
+import SiteFooter from "@/components/SiteFooter.astro";
+import SiteHeader from "@/components/SiteHeader.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { siteConfig } from "@/config/site";
+
+const pageTitle = "Política de Privacidade";
+const pageDescription = `Política de privacidade do ${siteConfig.name}. Como coletamos, usamos e protegemos seus dados pessoais em conformidade com a LGPD.`;
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <SiteHeader />
+  <main id="content" class="outer">
+    <div class="canvas">
+      <header class="pagehead">
+        <p class="eyebrow">Legal</p>
+        <h1 class="pagehead-title">Política de Privacidade</h1>
+        <p class="pagehead-description">
+          Última atualização: Julho de 2026.
+        </p>
+      </header>
+
+      <div class="prose">
+        <h2>1. Introdução</h2>
+        <p>
+          Esta Política de Privacidade descreve como o <strong>Diário de Mochileiro</strong>
+          ({siteConfig.siteUrl}) coleta, usa e protege suas informações pessoais. Ao utilizar
+          nosso site, você concorda com as práticas descritas nesta política.
+        </p>
+
+        <h2>2. Dados Coletados</h2>
+        <p>Podemos coletar os seguintes tipos de informações:</p>
+        <ul>
+          <li>
+            <strong>Dados de navegação:</strong> Informações sobre como você interage com nosso
+            site, incluindo páginas visitadas, tempo de permanência e dispositivo utilizado,
+            coletadas através de ferramentas de análise como Google Analytics.
+          </li>
+          <li>
+            <strong>Cookies e tecnologias similares:</strong> Utilizamos cookies para melhorar
+            sua experiência de navegação, lembrar suas preferências (como modo claro/escuro) e
+            para fins de análise estatística.
+          </li>
+          <li>
+            <strong>Dados fornecidos voluntariamente:</strong> Se você entrar em contato
+            conosco por email ou formulário, poderemos coletar nome, endereço de email e
+            a mensagem enviada.
+          </li>
+        </ul>
+
+        <h2>3. Uso de Cookies</h2>
+        <p>
+          Nosso site utiliza os seguintes tipos de cookies:
+        </p>
+        <ul>
+          <li>
+            <strong>Cookies essenciais:</strong> Necessários para o funcionamento básico do site
+            (como preferência de tema claro/escuro). Não podem ser desativados.
+          </li>
+          <li>
+            <strong>Cookies de análise:</strong> Utilizados pelo Google Analytics para entender
+            como os visitantes utilizam o site. Essas informações nos ajudam a melhorar o conteúdo.
+          </li>
+          <li>
+            <strong>Cookies de afiliados:</strong> Quando você clica em um link de afiliado e é
+            redirecionado para uma loja parceira, essa loja pode utilizar cookies para rastrear
+            a compra e atribuir a comissão ao nosso site.
+          </li>
+        </ul>
+
+        <h2>4. Links de Afiliados</h2>
+        <p>
+          O Diário de Mochileiro participa de programas de afiliados. Isso significa que quando
+          você clica em um link de produto e realiza uma compra, podemos receber uma comissão.
+          Isso <strong>não tem nenhum custo adicional para você</strong> — o preço do produto
+          permanece o mesmo.
+        </p>
+        <p>
+          Os links de afiliados são claramente identificados, e você é redirecionado para o site
+          da loja parceira (Amazon, Shopee, Mercado Livre, Magazine Luiza, etc.), onde a
+          transação é processada diretamente entre você e a loja.
+        </p>
+
+        <h2>5. Compartilhamento de Dados</h2>
+        <p>
+          Não vendemos, alugamos ou compartilhamos seus dados pessoais com terceiros para fins
+          de marketing. Podemos compartilhar dados apenas nas seguintes situações:
+        </p>
+        <ul>
+          <li>
+            Com prestadores de serviço que nos auxiliam na operação do site (hospedagem,
+            ferramentas de análise).
+          </li>
+          <li>
+            Quando exigido por lei ou para proteger nossos direitos legais.
+          </li>
+        </ul>
+
+        <h2>6. Seus Direitos (LGPD)</h2>
+        <p>
+          Em conformidade com a Lei Geral de Proteção de Dados (LGPD), você tem o direito de:
+        </p>
+        <ul>
+          <li>Solicitar acesso aos seus dados pessoais armazenados.</li>
+          <li>Solicitar a correção de dados incompletos ou desatualizados.</li>
+          <li>Solicitar a exclusão dos seus dados pessoais.</li>
+          <li>Solicitar a portabilidade dos seus dados.</li>
+          <li>Revogar o consentimento para o uso de seus dados a qualquer momento.</li>
+        </ul>
+
+        <h2>7. Segurança dos Dados</h2>
+        <p>
+          Adotamos medidas de segurança técnicas e administrativas para proteger seus dados
+          pessoais contra acesso não autorizado, alteração, divulgação ou destruição. No entanto,
+          nenhum método de transmissão pela internet é 100% seguro, e não podemos garantir
+          segurança absoluta.
+        </p>
+
+        <h2>8. Retenção de Dados</h2>
+        <p>
+          Retemos seus dados pessoais apenas pelo tempo necessário para cumprir as finalidades
+          para as quais foram coletados, ou conforme exigido por lei.
+        </p>
+
+        <h2>9. Alterações nesta Política</h2>
+        <p>
+          Reservamo-nos o direito de atualizar esta Política de Privacidade a qualquer momento.
+          Recomendamos que você revise esta página periodicamente para se manter informado sobre
+          como protegemos seus dados.
+        </p>
+
+        <h2>10. Contato</h2>
+        <p>
+          Se você tiver dúvidas sobre esta Política de Privacidade ou sobre o tratamento dos seus
+          dados pessoais, entre em contato conosco pelo email:
+          <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>.
+        </p>
+      </div>
+    </div>
+  </main>
+  <SiteFooter />
+</BaseLayout>

@@ -1,0 +1,310 @@
+---
+export interface Product {
+  nome: string;
+  categoria: string;
+  imagem: string;
+  destaque: string;
+  avaliacao: number;
+  linkAfiliado: string;
+  plataforma: "Amazon" | "Shopee" | "Mercado Livre" | "Magalu" | "Outro";
+}
+
+interface Props {
+  titulo: string;
+  subtitulo?: string;
+  produtos: Product[];
+}
+
+const { titulo, subtitulo, produtos } = Astro.props;
+
+const plataformaConfig = {
+  Amazon: {
+    label: "Ver Preço na Amazon",
+    class: "btn-amazon",
+    icon: "M18.15 15.45c-.45.45-1.05.68-1.8.68-1.1 0-1.95-.35-2.55-1.05l1.35-1.05c.3.35.7.5 1.2.5.5 0 .9-.15 1.2-.45.3-.3.45-.7.45-1.2 0-.5-.15-.9-.5-1.2-.3-.3-.75-.5-1.35-.5-.6 0-1.1.2-1.5.55L12 8.85c.55-.5 1.3-.75 2.2-.75 1.05 0 1.85.3 2.4.9.55.6.85 1.4.85 2.4 0 .75-.2 1.35-.6 1.75-.25.25-.45.4-.7.55zM5.65 10.5h2.1v5.4H9.3v-5.4h2.1V9.3H5.65v1.2z",
+  },
+  Shopee: {
+    label: "Ver Oferta na Shopee",
+    class: "btn-shopee",
+    icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z",
+  },
+  "Mercado Livre": {
+    label: "Ver no Mercado Livre",
+    class: "btn-mercadolivre",
+    icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z",
+  },
+  Magalu: {
+    label: "Ver na Magalu",
+    class: "btn-magalu",
+    icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z",
+  },
+  Outro: {
+    label: "Ver Oferta",
+    class: "btn-outro",
+    icon: "M18 13h-5v5h-2v-5H6v-2h5V6h2v5h5v2z",
+  },
+};
+
+const renderStars = (rating: number) => {
+  const full = Math.floor(rating);
+  const half = rating % 1 >= 0.5 ? 1 : 0;
+  const empty = 5 - full - half;
+  return { full, half, empty };
+};
+---
+
+<section id="curadoria" class="product-grid-section outer">
+  <div class="inner">
+    <div class="section-header">
+      <h2 class="section-title">{titulo}</h2>
+      {subtitulo && <p class="section-subtitle">{subtitulo}</p>}
+    </div>
+
+    <div class="product-grid">
+      {produtos.map((produto) => {
+        const config = plataformaConfig[produto.plataforma];
+        const stars = renderStars(produto.avaliacao);
+        return (
+          <article class="product-card">
+            <div class="product-image-wrapper">
+              <img
+                src={produto.imagem}
+                alt={produto.nome}
+                class="product-image"
+                loading="lazy"
+              />
+              <span class="product-category">{produto.categoria}</span>
+            </div>
+            <div class="product-body">
+              <h3 class="product-name">{produto.nome}</h3>
+              <p class="product-highlight">{produto.destaque}</p>
+              <div class="product-rating">
+                <div class="stars" aria-label={`${produto.avaliacao} de 5 estrelas`}>
+                  {Array.from({ length: stars.full }).map(() => (
+                    <svg class="star filled" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                  ))}
+                  {Array.from({ length: stars.half }).map(() => (
+                    <svg class="star half" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                  ))}
+                  {Array.from({ length: stars.empty }).map(() => (
+                    <svg class="star empty" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                  ))}
+                </div>
+                <span class="rating-text">{produto.avaliacao.toFixed(1)}</span>
+              </div>
+              <a
+                href={produto.linkAfiliado}
+                class={`affiliate-btn ${config.class}`}
+                target="_blank"
+                rel="sponsored nofollow noopener"
+              >
+                {config.label}
+              </a>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .product-grid-section {
+    padding-top: var(--space-section);
+    padding-bottom: var(--space-section);
+  }
+
+  .section-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-subtitle {
+    margin-top: 0.5rem;
+    color: var(--muted-foreground);
+    font-size: 1.0625rem;
+    max-width: 36rem;
+  }
+
+  .product-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  }
+
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--card);
+    overflow: hidden;
+    transition:
+      border-color var(--duration) var(--ease-out),
+      box-shadow var(--duration) var(--ease-out);
+  }
+
+  .product-card:hover {
+    border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+    box-shadow: 0 8px 30px rgb(0 0 0 / 8%);
+  }
+
+  .product-image-wrapper {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--muted);
+  }
+
+  .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s var(--ease-out);
+  }
+
+  .product-card:hover .product-image {
+    transform: scale(1.05);
+  }
+
+  .product-category {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    background: var(--background);
+    border: 1px solid var(--border);
+    padding: 0.25rem 0.6rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+    border-radius: var(--radius-full);
+  }
+
+  .product-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 1.25rem;
+    gap: 0.5rem;
+  }
+
+  .product-name {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--foreground);
+  }
+
+  .product-highlight {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--muted-foreground);
+    line-height: 1.5;
+  }
+
+  .product-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+  }
+
+  .stars {
+    display: flex;
+    gap: 0.1rem;
+  }
+
+  .star {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+
+  .star.filled {
+    color: #f59e0b;
+  }
+
+  .star.half {
+    color: #f59e0b;
+    opacity: 0.5;
+  }
+
+  .star.empty {
+    color: var(--border);
+  }
+
+  .rating-text {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--muted-foreground);
+  }
+
+  .affiliate-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding: 0.75rem 1rem;
+    font: inherit;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition:
+      background-color var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out);
+  }
+
+  .affiliate-btn:active {
+    transform: translateY(1px);
+  }
+
+  .btn-amazon {
+    background: #ff9900;
+    color: #111111;
+  }
+  .btn-amazon:hover {
+    background: #e68a00;
+  }
+
+  .btn-shopee {
+    background: #ee4d2d;
+    color: #ffffff;
+  }
+  .btn-shopee:hover {
+    background: #d64427;
+  }
+
+  .btn-mercadolivre {
+    background: #ffe600;
+    color: #2d3277;
+  }
+  .btn-mercadolivre:hover {
+    background: #e6d000;
+  }
+
+  .btn-magalu {
+    background: #0086ff;
+    color: #ffffff;
+  }
+  .btn-magalu:hover {
+    background: #0077e6;
+  }
+
+  .btn-outro {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+  .btn-outro:hover {
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
+</style>

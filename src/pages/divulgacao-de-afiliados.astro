@@ -1,0 +1,131 @@
+---
+import SiteFooter from "@/components/SiteFooter.astro";
+import SiteHeader from "@/components/SiteHeader.astro";
+import AffiliateDisclaimer from "@/components/AffiliateDisclaimer.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { siteConfig } from "@/config/site";
+
+const pageTitle = "Divulgação de Afiliados";
+const pageDescription = `Como o ${siteConfig.name} funciona com programas de afiliados. Transparência total sobre nossas fontes de receita.`;
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <SiteHeader />
+  <main id="content" class="outer">
+    <div class="canvas">
+      <header class="pagehead">
+        <p class="eyebrow">Transparência</p>
+        <h1 class="pagehead-title">Divulgação de Afiliados</h1>
+        <p class="pagehead-description">
+          Transparência total sobre como o Diário de Mochileiro é mantido e como ganhamos dinheiro.
+        </p>
+      </header>
+
+      <AffiliateDisclaimer variant="banner" />
+
+      <div class="prose">
+        <h2>O que são Links de Afiliados?</h2>
+        <p>
+          Links de afiliados são URLs especiais que contêm um identificador único associado ao
+          nosso site. Quando você clica em um desses links e realiza uma compra na loja parceira,
+          o sistema de afiliados registra que a compra veio do Diário de Mochileiro e nos atribui
+          uma comissão sobre o valor da venda.
+        </p>
+        <p>
+          <strong>Importante:</strong> O preço do produto para você é exatamente o mesmo, independente
+          de usar nosso link ou acessar diretamente o site da loja. A comissão é paga pela loja
+          parceira, não por você.
+        </p>
+
+        <h2>Por que usamos Links de Afiliados?</h2>
+        <p>
+          Manter um site de qualidade custa dinheiro — hospedagem, domínio, ferramentas de análise,
+          tempo de edição e pesquisa. Os links de afiliados são uma das principais formas como
+          o Diário de Mochileiro se sustenta financeiramente.
+        </p>
+        <p>
+          Essa receita nos permite:
+        </p>
+        <ul>
+          <li>Manter o site funcionando e sem anúncios intrusivos.</li>
+          <li>Investir em pesquisa de especificações técnicas e análise de avaliações.</li>
+          <li>Atualizar periodicamente nossas recomendações.</li>
+          <li>Cobrir custos de infraestrutura e ferramentas.</li>
+        </ul>
+
+        <h2>Lojas Parceiras</h2>
+        <p>
+          Participamos de programas de afiliados das seguintes plataformas:
+        </p>
+        <ul>
+          <li><strong>Amazon Associates:</strong> Programa de afiliados da Amazon Brasil.</li>
+          <li><strong>Shopee:</strong> Programa de afiliados da Shopee Brasil.</li>
+          <li><strong>Mercado Livre:</strong> Programa de afiliados do Mercado Livre.</li>
+          <li><strong>Magazine Luiza:</strong> Programa de afiliados da Magalu.</li>
+        </ul>
+
+        <h2>Nossa Metodologia de Recomendação</h2>
+        <p>
+          A existência de um programa de afiliados <strong>não influencia</strong> nossas
+          recomendações. Nossa metodologia é baseada em:
+        </p>
+        <ul>
+          <li>
+            <strong>Especificações técnicas:</strong> Analisamos dados reais dos fabricantes
+            (coluna d'água, peso, material, dimensões, etc.).
+          </li>
+          <li>
+            <strong>Avaliações de compradores:</strong> Compilamos feedback real de compradores
+            em cada plataforma.
+          </li>
+          <li>
+            <strong>Custo-benefício:</strong> Priorizamos a relação entre qualidade e preço,
+            independente da comissão paga.
+          </li>
+        </ul>
+        <p>
+          Se um produto tem especificações técnicas inferiores ou avaliações ruins, não o
+          recomendamos — independente de qual seja a comissão. Nossa credibilidade é mais
+          importante que qualquer comissão pontual.
+        </p>
+
+        <h2>Como Identificar Links de Afiliados?</h2>
+        <p>
+          Todos os nossos links de afiliados são claramente identificados:
+        </p>
+        <ul>
+          <li>
+            Os botões de CTA indicam a loja de destino (ex: "Ver Oferta na Amazon",
+            "Ver Preço na Shopee").
+          </li>
+          <li>
+            O aviso de divulgação de afiliados é exibido no topo dos artigos e no rodapé do site.
+          </li>
+          <li>
+            Esta página de divulgação detalha todas as nossas práticas de afiliados.
+          </li>
+        </ul>
+
+        <h2>Compromisso com o Leitor</h2>
+        <p>
+          Nossos leitores são nossa prioridade. Cada recomendação que fazemos é baseada em análise
+          técnica e não em quanto ganhamos de comissa. Se você encontrar algum produto que
+          recomendamos e acredita que não atende aos padrões descritos, por favor nos avise pelo
+          email <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>.
+        </p>
+        <p>
+          Valorizamos a confiança que você deposita em nossas recomendações e trabalhamos
+          diariamente para mantê-la.
+        </p>
+
+        <h2>Contato</h2>
+        <p>
+          Se você tiver dúvidas sobre nossas práticas de afiliados ou sobre qualquer
+          recomendação em particular, entre em contato conosco pelo email:
+          <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>.
+        </p>
+      </div>
+    </div>
+  </main>
+  <SiteFooter />
+</BaseLayout>

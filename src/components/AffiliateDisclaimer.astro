@@ -1,0 +1,93 @@
+---
+interface Props {
+  variant?: "inline" | "banner";
+}
+
+const { variant = "inline" } = Astro.props;
+---
+
+{variant === "banner" ? (
+  <div class="disclaimer-banner outer">
+    <div class="inner">
+      <div class="disclaimer-content">
+        <svg class="disclaimer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <p>
+          <strong>Aviso de Divulgação:</strong> O Diário de Mochileiro participa de programas de
+          afiliados (incluindo Amazon, Shopee, Mercado Livre e outros). Podemos receber uma comissão
+          por compras qualificadas efetuadas através dos nossos links, sem nenhum custo adicional
+          para você. As recomendações são baseadas em análise técnica e avaliações de compradores
+          reais.
+        </p>
+      </div>
+    </div>
+  </div>
+) : (
+  <aside class="disclaimer-inline">
+    <svg class="disclaimer-icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="12" y1="8" x2="12" y2="12"/>
+      <line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
+    <p>
+      <strong>Divulgação de Afiliados:</strong> Links neste artigo são de afiliados.
+      Podemos receber uma comissão por compras qualificadas, sem custo adicional para você.
+    </p>
+  </aside>
+)}
+
+<style>
+  .disclaimer-banner {
+    padding: 1.25rem 0;
+    background: color-mix(in srgb, var(--warning) 8%, var(--background));
+    border-top: 1px solid color-mix(in srgb, var(--warning) 20%, var(--border));
+    border-bottom: 1px solid color-mix(in srgb, var(--warning) 20%, var(--border));
+  }
+
+  .disclaimer-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.8125rem;
+    line-height: 1.65;
+    color: var(--muted-foreground);
+  }
+
+  .disclaimer-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    color: var(--warning);
+    margin-top: 0.1rem;
+  }
+
+  .disclaimer-inline {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    background: color-mix(in srgb, var(--warning) 6%, transparent);
+    border: 1px solid color-mix(in srgb, var(--warning) 15%, var(--border));
+    border-radius: var(--radius-sm);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: var(--muted-foreground);
+  }
+
+  .disclaimer-icon-small {
+    width: 1.1rem;
+    height: 1.1rem;
+    flex-shrink: 0;
+    color: var(--warning);
+    margin-top: 0.1rem;
+  }
+
+  .disclaimer-inline p,
+  .disclaimer-content p {
+    margin: 0;
+  }
+</style>

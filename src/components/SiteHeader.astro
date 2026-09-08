@@ -3,12 +3,11 @@ import { navigation, siteConfig } from "@/config/site";
 import { formatDate, postHref, readingLabel, visiblePosts, type Post } from "@/lib/posts";
 
 interface Props {
-  posts: Post[];
+  posts?: Post[];
 }
 
 const currentPath = Astro.url.pathname;
-const posts = visiblePosts(Astro.props.posts);
-/* Inlined so the palette still returns results if /search-index.json fails. */
+const posts = Astro.props.posts ? visiblePosts(Astro.props.posts) : [];
 const searchFallback = posts.slice(0, 12).map((post) => ({
   title: post.data.title,
   excerpt: post.data.excerpt,
@@ -27,7 +26,7 @@ const isCurrentPath = (href: string) =>
     <a href="/" class="wordmark">{siteConfig.name}</a>
 
     <div class="flex items-center gap-5">
-      <nav class="hidden items-center gap-6 md:flex" aria-label="Primary navigation">
+      <nav class="hidden items-center gap-6 md:flex" aria-label="Navegação principal">
         {
           navigation.map((item) => (
             <a
@@ -45,7 +44,7 @@ const isCurrentPath = (href: string) =>
         <a
           href="/search/"
           class="icon-btn"
-          aria-label="Search this site"
+          aria-label="Pesquisar neste site"
           aria-haspopup="dialog"
           aria-controls="site-search-dialog"
           data-search-toggle
@@ -62,7 +61,7 @@ const isCurrentPath = (href: string) =>
           role="switch"
           aria-checked="false"
           data-theme-toggle
-          aria-label="Switch to dark mode"
+          aria-label="Mudar para modo escuro"
         >
           <span class="theme-switch__knob" aria-hidden="true">
             <svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none">
@@ -85,7 +84,7 @@ const isCurrentPath = (href: string) =>
           <svg aria-hidden="true" class="h-5 w-5" viewBox="0 0 24 24" fill="none">
             <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
           </svg>
-          <span class="sr-only">Open navigation menu</span>
+          <span class="sr-only">Abrir menu de navegação</span>
         </button>
       </div>
     </div>
@@ -100,25 +99,25 @@ const isCurrentPath = (href: string) =>
   data-search-dialog
 >
   <div class="search-panel" data-search-panel data-empty>
-    <form action="/search/" method="get" role="search" aria-label="Site search">
+    <form action="/search/" method="get" role="search" aria-label="Pesquisa no site">
       <div class="search-field">
         <svg aria-hidden="true" class="search-field-icon" viewBox="0 0 24 24" fill="none">
           <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.75" />
           <path d="m16 16 4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
         </svg>
-        <h2 id="site-search-title" class="sr-only">Search {siteConfig.name}</h2>
-        <label class="sr-only" for="site-search-input">Search posts</label>
+        <h2 id="site-search-title" class="sr-only">Pesquisar em {siteConfig.name}</h2>
+        <label class="sr-only" for="site-search-input">Pesquisar artigos</label>
         <input
           id="site-search-input"
           name="q"
           type="search"
           class="search-input"
-          placeholder="Search posts, categories, authors…"
+          placeholder="Pesquisar artigos, categorias…"
           autocomplete="off"
           enterkeyhint="search"
           data-search-input
         />
-        <button type="button" class="icon-btn shrink-0" aria-label="Close search" data-search-close>
+        <button type="button" class="icon-btn shrink-0" aria-label="Fechar pesquisa" data-search-close>
           <svg aria-hidden="true" class="h-[1.1rem] w-[1.1rem]" viewBox="0 0 24 24" fill="none">
             <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
           </svg>
@@ -134,10 +133,10 @@ const isCurrentPath = (href: string) =>
       </div>
 
       <div class="search-foot" aria-hidden="true">
-        <span><kbd>↑</kbd><kbd>↓</kbd> Navigate</span>
-        <span><kbd>↵</kbd> Open</span>
-        <span><kbd data-search-shortcut>Ctrl K</kbd> Toggle</span>
-        <span class="ml-auto hidden sm:inline">Enter searches everything</span>
+        <span><kbd>↑</kbd><kbd>↓</kbd> Navegar</span>
+        <span><kbd>↵</kbd> Abrir</span>
+        <span><kbd data-search-shortcut>Ctrl K</kbd> Alternar</span>
+        <span class="ml-auto hidden sm:inline">Enter pesquisa tudo</span>
       </div>
     </form>
   </div>
@@ -148,19 +147,19 @@ const isCurrentPath = (href: string) =>
   class="mobile-menu-panel md:hidden"
   role="dialog"
   aria-modal="true"
-  aria-label="Navigation menu"
+  aria-label="Menu de navegação"
   hidden
 >
   <div class="flex items-center justify-between gap-6 border-b border-border px-6 py-4">
     <a href="/" class="wordmark">{siteConfig.name}</a>
-    <button type="button" class="icon-btn" data-mobile-menu-close aria-label="Close navigation menu">
+    <button type="button" class="icon-btn" data-mobile-menu-close aria-label="Fechar menu de navegação">
       <svg aria-hidden="true" class="h-5 w-5" viewBox="0 0 24 24" fill="none">
         <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
       </svg>
     </button>
   </div>
 
-  <nav class="px-6 py-4" aria-label="Mobile navigation">
+  <nav class="px-6 py-4" aria-label="Navegação mobile">
     <ul>
       {
         navigation.map((item) => (
@@ -200,8 +199,6 @@ const isCurrentPath = (href: string) =>
       shortcutKey.textContent = "⌘ K";
     }
 
-    /* The full index is fetched on first open, so the palette costs nothing on
-       pages the reader never searches from. */
     const loadIndex = () => {
       if (index.length > 0) return Promise.resolve(index);
 
@@ -231,8 +228,6 @@ const isCurrentPath = (href: string) =>
         "'": "&#39;",
       })[character]);
 
-    /* Lower is better: an exact title prefix beats a title match, which beats a
-       category match, which beats a hit in the excerpt or author name. */
     const rank = (item, query) => {
       const title = item.title.toLowerCase();
       const category = (item.category || "").toLowerCase();
@@ -258,8 +253,6 @@ const isCurrentPath = (href: string) =>
       const raw = input.value.trim();
       const query = raw.toLowerCase();
 
-      /* Until the reader types, the palette collapses to just the input: no
-         latest-posts list and no placeholder copy. */
       if (!query) {
         panel?.setAttribute("data-empty", "");
         heading.textContent = "";
@@ -272,7 +265,6 @@ const isCurrentPath = (href: string) =>
 
       const items = await loadIndex();
 
-      /* A newer keystroke may have landed while the index was loading. */
       if (input.value.trim().toLowerCase() !== query) return;
 
       const matches = items
@@ -282,12 +274,12 @@ const isCurrentPath = (href: string) =>
         .slice(0, 7)
         .map(({ item }) => item);
 
-      heading.textContent = "Results";
-      summary.textContent = `${matches.length} ${matches.length === 1 ? "result" : "results"} for “${raw}”.`;
+      heading.textContent = "Resultados";
+      summary.textContent = `${matches.length} ${matches.length === 1 ? "resultado" : "resultados"} para "${raw}".`;
       results.innerHTML =
         matches.length > 0
           ? matches.map(resultMarkup).join("")
-          : `<p class="search-empty">No posts match that yet. Try a title, topic, or author.</p>`;
+          : `<p class="search-empty">Nenhum artigo encontrado. Tente um título ou tema diferente.</p>`;
     };
 
     const open = () => {
@@ -361,8 +353,6 @@ const isCurrentPath = (href: string) =>
     const header = document.querySelector(".site-header");
 
     if (header) {
-      /* Hide on the way down, reveal on the way back up. The threshold keeps
-         small scroll jitter and rubber-banding from flickering the header. */
       const revealThreshold = 6;
       let ticking = false;
       let lastY = window.scrollY;
@@ -560,8 +550,6 @@ const isCurrentPath = (href: string) =>
     padding: 0.85rem;
   }
 
-  /* Before the first keystroke the palette is just the input and the shortcut
-     hints, so it stays as small as possible. */
   .search-panel[data-empty] .search-body {
     display: none;
   }

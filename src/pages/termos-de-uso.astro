@@ -1,0 +1,119 @@
+---
+import SiteFooter from "@/components/SiteFooter.astro";
+import SiteHeader from "@/components/SiteHeader.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { siteConfig } from "@/config/site";
+
+const pageTitle = "Termos de Uso";
+const pageDescription = `Termos e condições de uso do ${siteConfig.name}. Ao acessar nosso site, você concorda com estes termos.`;
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <SiteHeader />
+  <main id="content" class="outer">
+    <div class="canvas">
+      <header class="pagehead">
+        <p class="eyebrow">Legal</p>
+        <h1 class="pagehead-title">Termos de Uso</h1>
+        <p class="pagehead-description">
+          Última atualização: Julho de 2026.
+        </p>
+      </header>
+
+      <div class="prose">
+        <h2>1. Aceitação dos Termos</h2>
+        <p>
+          Ao acessar e utilizar o site <strong>Diário de Mochileiro</strong>
+          ({siteConfig.siteUrl}), você concorda em cumprir e estar vinculado a estes Termos de Uso.
+          Se você não concordar com algum dos termos, não deve utilizar o site.
+        </p>
+
+        <h2>2. Natureza do Conteúdo</h2>
+        <p>
+          O conteúdo publicado no Diário de Mochileiro é de caráter <strong>informativo e
+          educativo</strong>. As recomendações de produtos são baseadas em:
+        </p>
+        <ul>
+          <li>Análise de especificações técnicas fornecidas pelos fabricantes.</li>
+          <li>Compilação e análise de avaliações de compradores reais em plataformas de e-commerce.</li>
+          <li>Pesquisa de mercado e comparação de custo-benefício.</li>
+        </ul>
+        <p>
+          <strong>Não realizamos testes físicos proprietários.</strong> As opiniões expressas
+          são baseadas em curadoria técnica e não devem ser interpretadas como testemunhos
+          pessoais de uso dos produtos.
+        </p>
+
+        <h2>3. Isenção de Responsabilidade</h2>
+        <p>
+          As informações fornecidas neste site são transmitidas de boa-fé e para fins de
+          informação geral. Não oferecemos garantias de qualquer tipo, expressas ou implícitas,
+          sobre a completude, precisão, confiabilidade ou adequação das informações, produtos,
+          serviços ou gráficos relacionados contidos no site para qualquer finalidade.
+        </p>
+        <p>
+          O uso de qualquer informação ou material do site é de sua total responsabilidade. Não
+          nos responsabilizamos por quaisquer perdas ou danos decorrentes do uso das informações
+          fornecidas.
+        </p>
+
+        <h2>4. Links de Afiliados</h2>
+        <p>
+          O site contém links de afiliados para produtos de terceiros. Ao clicar nesses links e
+          realizar uma compra, você é redirecionado para o site do comerciante, onde a transação
+          é processada diretamente entre você e o comerciante.
+        </p>
+        <p>
+          O Diário de Mochileiro pode receber uma comissão por compras qualificadas efetuadas
+          através desses links, <strong>sem nenhum custo adicional para você</strong>. Essas
+          comissões ajudam a manter o site funcionando e a produzir conteúdo de qualidade.
+        </p>
+
+        <h2>5. Propriedade Intelectual</h2>
+        <p>
+          Todo o conteúdo do site, incluindo textos, imagens, logotipos, design e código, é
+          protegido por direitos autorais e outras leis de propriedade intelectual. Você pode
+          compartilhar links para nossas páginas, mas não pode reproduzir, modificar ou
+          distribuir nosso conteúdo sem autorização prévia por escrito.
+        </p>
+
+        <h2>6. Conduta do Usuário</h2>
+        <p>Ao utilizar o site, você concorda em NÃO:</p>
+        <ul>
+          <li>Utilizar o site para fins ilegais ou não autorizados.</li>
+          <li>Tentar acessar áreas restritas do site ou contornar medidas de segurança.</li>
+          <li>Interferir no funcionamento normal do site.</li>
+          <li>Coletar informações de outros usuários sem seu consentimento.</li>
+          <li>Enviar conteúdo malicioso, spam ou material ofensivo.</li>
+        </ul>
+
+        <h2>7. Disponibilidade do Site</h2>
+        <p>
+          Nos esforçamos para manter o site disponível e funcionando, mas não garantimos
+          disponibilidade ininterrupta. O site pode ficar temporariamente indisponível para
+          manutenção ou por motivos fora do nosso controle.
+        </p>
+
+        <h2>8. Alterações nos Termos</h2>
+        <p>
+          Reservamo-nos o direito de modificar estes Termos de Uso a qualquer momento. As
+          alterações entram em vigor imediatamente após a publicação no site. O uso contínuo
+          do site após as alterações constitui aceitação dos novos termos.
+        </p>
+
+        <h2>9. Legislação Aplicável</h2>
+        <p>
+          Estes Termos de Uso são regidos pelas leis da República Federativa do Brasil. Qualquer
+          controvérsia será resolvida nos tribunais competentes do Brasil.
+        </p>
+
+        <h2>10. Contato</h2>
+        <p>
+          Se você tiver dúvidas sobre estes Termos de Uso, entre em contato conosco pelo email:
+          <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>.
+        </p>
+      </div>
+    </div>
+  </main>
+  <SiteFooter />
+</BaseLayout>

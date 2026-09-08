@@ -1,0 +1,125 @@
+---
+---
+<section class="trust-section outer">
+  <div class="inner">
+    <h2 class="section-title">Como Selecionamos Nossas Indicações</h2>
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="trust-icon-wrapper">
+          <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+            <rect x="9" y="3" width="6" height="4" rx="1"/>
+            <path d="m9 14 2 2 4-4"/>
+          </svg>
+        </div>
+        <h3 class="trust-card-title">Análise Técnica</h3>
+        <p class="trust-card-text">
+          Verificamos especificações dos fabricantes: coluna d'água em mm, tecidos ripstop, densidade
+          de isolantes, capacidade em litros e peso real de cada equipamento.
+        </p>
+      </div>
+
+      <div class="trust-card">
+        <div class="trust-icon-wrapper">
+          <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <h3 class="trust-card-title">Avaliações de Compradores</h3>
+        <p class="trust-card-text">
+          Compilamos e analisamos avaliações reais de compradores em plataformas como Amazon,
+          Shopee, Mercado Livre e Magalu para identificar padrões de satisfação.
+        </p>
+      </div>
+
+      <div class="trust-card">
+        <div class="trust-icon-wrapper">
+          <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        <h3 class="trust-card-title">Custo-Benefício</h3>
+        <p class="trust-card-text">
+          Combinamos dados técnicos e feedback do mercado para recomendar produtos que oferecem
+          a melhor relação entre qualidade e preço para cada faixa de orçamento.
+        </p>
+      </div>
+
+      <div class="trust-card">
+        <div class="trust-icon-wrapper">
+          <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h3 class="trust-card-title">Transparência Total</h3>
+        <p class="trust-card-text">
+          Nossos links são de afiliados. Quando você compra por eles, recebemos uma comissão
+          sem custo adicional para você. Isso mantém o site funcionando e sem anúncios intrusivos.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .trust-section {
+    padding-top: var(--space-section);
+    padding-bottom: var(--space-section);
+    background: var(--muted);
+  }
+
+  .trust-grid {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  }
+
+  .trust-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    transition: border-color var(--duration) var(--ease-out);
+  }
+
+  .trust-card:hover {
+    border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+  }
+
+  .trust-icon-wrapper {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+    border-radius: var(--radius-sm);
+  }
+
+  .trust-icon {
+    width: 1.35rem;
+    height: 1.35rem;
+    color: var(--accent);
+  }
+
+  .trust-card-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--foreground);
+  }
+
+  .trust-card-text {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: var(--muted-foreground);
+  }
+</style>

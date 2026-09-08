@@ -1,89 +1,298 @@
 ---
 import { getCollection } from "astro:content";
-import NewsletterSignup from "@/components/NewsletterSignup.astro";
-import PostCard from "@/components/PostCard.astro";
 import SiteFooter from "@/components/SiteFooter.astro";
 import SiteHeader from "@/components/SiteHeader.astro";
+import Hero from "@/components/Hero.astro";
+import ProductGrid from "@/components/ProductGrid.astro";
+import TopPick from "@/components/TopPick.astro";
+import TrustBadges from "@/components/TrustBadges.astro";
+import FaqAccordion from "@/components/FaqAccordion.astro";
+import AffiliateDisclaimer from "@/components/AffiliateDisclaimer.astro";
+import PostCard from "@/components/PostCard.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { siteConfig } from "@/config/site";
-import { categoryHref, getCategoryList, getFeatured, visiblePosts } from "@/lib/posts";
+import { visiblePosts } from "@/lib/posts";
 
 const allPosts = visiblePosts(await getCollection("posts"));
-const [latest, ...rest] = allPosts;
-const feed = rest.slice(0, 8);
-const featured = getFeatured(allPosts, 4).filter((post) => post.id !== latest?.id);
-const categoryList = getCategoryList(allPosts);
-const hasMore = rest.length > feed.length;
+const recentPosts = allPosts.slice(0, 6);
+
+const produtosDestaque = [
+  {
+    nome: "Mochila Deuter Aircontact Lite 40+10 SL",
+    categoria: "Mochilas",
+    imagem: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&h=450&fit=crop",
+    destaque: "Coluna d'água: 600mm | Peso: 1.680g | Capacidade: 50L",
+    avaliacao: 4.7,
+    linkAfiliado: "https://www.amazon.com.br/dp/B0EXAMPLE1?tag=diariodemochileiro-20",
+    plataforma: "Amazon" as const,
+  },
+  {
+    nome: "Barraca Naturehike Cloud Up 2",
+    categoria: "Barracas",
+    imagem: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600&h=450&fit=crop",
+    destaque: "Impermeável: 3000mm coluna d'água | Peso: 1.5kg | 2 pessoas",
+    avaliacao: 4.5,
+    linkAfiliado: "https://shopee.com.br/product/EXAMPLE2?affiliate_id=diariodemochileiro",
+    plataforma: "Shopee" as const,
+  },
+  {
+    nome: "Saco de Dormir Naturehike MH400",
+    categoria: "Sacos de Dormir",
+    imagem: "https://images.unsplash.com/photo-1510312305653-8ed496efae75?w=600&h=450&fit=crop",
+    destaque: "Temperatura: -5°C | Peso: 1.5kg | Preenchimento Down",
+    avaliacao: 4.6,
+    linkAfiliado: "https://www.mercadolivre.com.br/produto/EXAMPLE3?id=diariodemochileiro",
+    plataforma: "Mercado Livre" as const,
+  },
+  {
+    nome: "Isolamento Térmico Thermarest NeoAir XLite",
+    categoria: "Isolamentos Térmicos",
+    imagem: "https://images.unsplash.com/photo-1504851149312-7a075b496cc7?w=600&h=450&fit=crop",
+    destaque: "R-Value: 4.2 | Espessura: 6.3cm | Peso: 340g",
+    avaliacao: 4.8,
+    linkAfiliado: "https://www.magazineluiza.com.br/produto/EXAMPLE4/?partner_id=diariodemochileiro",
+    plataforma: "Magalu" as const,
+  },
+  {
+    nome: "Cantil Stanley Classic Vacuum Bottle 1L",
+    categoria: "Cantil e Panelas",
+    imagem: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=450&fit=crop",
+    destaque: "Isolamento: 24h quente / 24h frio | Material: Aço inox",
+    avaliacao: 4.9,
+    linkAfiliado: "https://www.amazon.com.br/dp/B0EXAMPLE5?tag=diariodemochileiro-20",
+    plataforma: "Amazon" as const,
+  },
+  {
+    nome: "Lanterna Fenix PD36R Pro",
+    categoria: "Lanterna e Iluminação",
+    imagem: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=600&h=450&fit=crop",
+    destaque: "Lumens: 2800 | Autonomia: 135h | Resistente à água IP68",
+    avaliacao: 4.8,
+    linkAfiliado: "https://shopee.com.br/product/EXAMPLE6?affiliate_id=diariodemochileiro",
+    plataforma: "Shopee" as const,
+  },
+];
+
+const melhorCustoBeneficio = {
+  nome: "Mochila Kelty Coyote 65",
+  categoria: "Mochilas",
+  imagem: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&h=600&fit=crop",
+  descricao: "Uma das mochilas mais completas para mochilões de média e longa duração, com sistema de costela ajustável, múltiplos compartimentos e excelente relação custo-benefício para acampadores que buscam qualidade sem gastar uma fortuna.",
+  pontosFortes: [
+    "Capacidade de 65 litros — ideal para viagens de 5 a 10 dias",
+    "Sistema de costela ajustável Torso Fit — adapta-se a diferentes biotipos",
+    "Coluna d'água de 600mm — proteção contra chuvas leves a moderadas",
+    "Múltiplos compartimentos e bolsos laterais organizacionais",
+    "Peso total de 2.15kg — equilíbrio entre resistência e leveza",
+    "Avaliação média de 4.6 estrelas entre compradores reais",
+  ],
+  linkAfiliado: "https://www.amazon.com.br/dp/B0EXAMPLE7?tag=diariodemochileiro-20",
+  plataforma: "Amazon" as const,
+};
+
+const faqItens = [
+  {
+    pergunta: "Como vocês escolhem os produtos para recomendar?",
+    resposta: "Nossa equipe analisa especificações técnicas dos fabricantes (coluna d'água, material, peso, dimensões) e compila avaliações de compradores reais em plataformas como Amazon, Shopee e Mercado Livre. Priorizamos produtos com boa relação custo-benefício e avaliações consistentes.",
+  },
+  {
+    pergunta: "Vocês testam fisicamente os produtos?",
+    resposta: "Nossa metodologia é 100% baseada em curadoria especializada. Não realizamos testes físicos proprietários. Recomendamos com base em análise de especificações técnicas e compilação de avaliações de compradores reais. Isso nos permite cobrir uma gama muito maior de produtos.",
+  },
+  {
+    pergunta: "O que é coluna d'água e por que é importante?",
+    resposta: "Coluna d'água é a medida de impermeabilidade de um tecido. Indica a altura da coluna de água que o tecido suporta antes de vazar. Para camping, recomendamos no mínimo 1000mm para barracas e 3000mm para equipamentos expostos diretamente à chuva.",
+  },
+  {
+    pergunta: "Como calculo o volume ideal da minha mochila?",
+    resposta: "Para mochilões de 1-3 dias: 30-40L. Para 3-5 dias: 40-60L. Para mais de 5 dias: 60L+. O volume ideal depende da duração da viagem, clima e se você carrega comida e água ou compra no caminho.",
+  },
+  {
+    pergunta: "Vocês ganham dinheiro com as recomendações?",
+    resposta: "Sim. Participamos de programas de afiliados e podemos receber uma comissão quando você compra através dos nossos links. Isso não tem custo adicional para você e ajuda a manter o site funcionando sem anúncios intrusivos. Nossas recomendações são baseadas em análise técnica, não em comissões.",
+  },
+  {
+    pergunta: "Qual a diferença entre isolamento sintético e Down?",
+    resposta: "Down (pena de ganso/pato) oferece melhor relação calor/peso, mas perde eficiência quando molhado. Isolamento sintético é mais barato, seca mais rápido, mas é mais pesado e volumoso para o mesmo nível de calor. Para uso em ambiente seco, Down é superior. Para chuva frequente, sintético é mais prático.",
+  },
+];
 ---
 
-<BaseLayout>
+<BaseLayout title="Início" description={siteConfig.description}>
   <SiteHeader posts={allPosts} />
-  <main id="content" class="outer">
-    <div class="inner">
-      <h1 class="sr-only">{siteConfig.name} — {siteConfig.tagline}</h1>
+  <main id="content">
+    <Hero />
 
-      {latest && (
-        <section class="pt-10 pb-[var(--space-section)] md:pt-14" aria-label="Latest post">
-          <PostCard post={latest} variant="lead" headingLevel="h2" dateLabel="Latest" />
-        </section>
-      )}
+    <AffiliateDisclaimer variant="banner" />
 
-      <div class="grid gap-[var(--space-section)] lg:grid-cols-[minmax(0,4fr)_minmax(0,2fr)] lg:gap-12">
-        <section aria-labelledby="more-posts">
-          <h2 id="more-posts" class="section-title">More posts</h2>
+    <ProductGrid
+      titulo="Curadoria em Destaque"
+      subtitulo="Analisamos especificações técnicas e avaliações de compradores reais para recomendar os melhores equipamentos de camping."
+      produtos={produtosDestaque}
+    />
 
-          {feed.length > 0 ? (
-            <div class="feed">
-              {feed.map((post) => <PostCard post={post} />)}
+    <TopPick produto={melhorCustoBeneficio} />
+
+    <TrustBadges />
+
+    <section id="guia-rapido" class="guide-section outer">
+      <div class="inner">
+        <h2 class="section-title">Guia Rápido de Materiais</h2>
+        <div class="guide-grid">
+          <article class="guide-card">
+            <div class="guide-icon-wrapper">
+              <svg class="guide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
             </div>
-          ) : (
-            <p class="text-muted-foreground">More posts are coming soon.</p>
-          )}
+            <h3 class="guide-card-title">O que é Coluna d'Água?</h3>
+            <p class="guide-card-text">
+              É a medida de impermeabilidade de um tecido. Indica a altura da coluna de água que o
+              tecido suporta antes de vazar. Para barracas, recomendamos no mínimo 1000mm; para
+              capas de chuva, 3000mm ou mais.
+            </p>
+          </article>
 
-          {hasMore && (
-            <a href="/posts/" class="btn btn-outline btn-block mt-16">Browse the archive</a>
-          )}
-        </section>
-
-        <aside class="sidebar">
-          <section aria-labelledby="about-heading">
-            <h2 id="about-heading" class="section-title">About</h2>
-            <p class="text-lg font-semibold tracking-tight">{siteConfig.name}</p>
-            <p class="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground">{siteConfig.about}</p>
-            <div class="mt-7 border-t border-border pt-6">
-              <NewsletterSignup />
+          <article class="guide-card">
+            <div class="guide-icon-wrapper">
+              <svg class="guide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                <path d="M8 21h8M12 17v4"/>
+              </svg>
             </div>
-          </section>
+            <h3 class="guide-card-title">Volume de uma Mochila</h3>
+            <p class="guide-card-text">
+              Para 1-3 dias: 30-40L. Para 3-5 dias: 40-60L. Para mais de 5 dias: 60L+.
+              O volume ideal depende da duração, clima e se você carrega comida e água.
+            </p>
+          </article>
 
-          {featured.length > 0 && (
-            <section aria-labelledby="featured-heading">
-              <h2 id="featured-heading" class="section-title">Featured</h2>
-              <div class="grid gap-7">
-                {featured.map((post) => <PostCard post={post} variant="compact" headingLevel="h3" />)}
-              </div>
-            </section>
-          )}
+          <article class="guide-card">
+            <div class="guide-icon-wrapper">
+              <svg class="guide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+            </div>
+            <h3 class="guide-card-title">R-Value do Isolamento</h3>
+            <p class="guide-card-text">
+              O R-Value mede a capacidade de isolamento térmico de um colchão ou isolante.
+              Para verões: R 1-2. Para primaveras/outonos: R 3-4. Para inverno: R 5+.
+            </p>
+          </article>
 
-          {categoryList.length > 0 && (
-            <section aria-labelledby="categories-heading">
-              <h2 id="categories-heading" class="section-title">Categories</h2>
-              <ul class="grid gap-4">
-                {categoryList.map((category) => (
-                  <li>
-                    <a href={categoryHref(category.name)} class="link-title flex items-center justify-between gap-3">
-                      <span class="link-title__text text-base font-semibold tracking-tight">{category.name}</span>
-                      <span class="pill shrink-0">
-                        {category.count} {category.count === 1 ? "post" : "posts"}
-                      </span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
-        </aside>
+          <article class="guide-card">
+            <div class="guide-icon-wrapper">
+              <svg class="guide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            <h3 class="guide-card-title">Down vs. Sintético</h3>
+            <p class="guide-card-text">
+              Down oferece melhor calor/peso mas perde eficiência com umidade. Sintético é mais
+              barato, seca rápido, mas é mais pesado. Para chuva frequente, sintético é mais prático.
+            </p>
+          </article>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <section class="blog-feed-section outer">
+      <div class="inner">
+        <h2 class="section-title">Últimos Artigos</h2>
+        {recentPosts.length > 0 ? (
+          <div class="blog-feed">
+            {recentPosts.map((post) => (
+              <PostCard post={post} />
+            ))}
+          </div>
+        ) : (
+          <p class="text-muted-foreground">Em breve, novos artigos sobre equipamentos de camping.</p>
+        )}
+        {allPosts.length > 6 && (
+          <a href="/posts/" class="btn btn-outline btn-block mt-10">Ver todos os artigos</a>
+        )}
+      </div>
+    </section>
+
+    <FaqAccordion itens={faqItens} />
   </main>
   <SiteFooter />
 </BaseLayout>
+
+<style>
+  .guide-section {
+    padding-top: var(--space-section);
+    padding-bottom: var(--space-section);
+    background: var(--muted);
+  }
+
+  .guide-grid {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  }
+
+  .guide-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    transition: border-color var(--duration) var(--ease-out);
+  }
+
+  .guide-card:hover {
+    border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+  }
+
+  .guide-icon-wrapper {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+    border-radius: var(--radius-sm);
+  }
+
+  .guide-icon {
+    width: 1.35rem;
+    height: 1.35rem;
+    color: var(--accent);
+  }
+
+  .guide-card-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--foreground);
+  }
+
+  .guide-card-text {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: var(--muted-foreground);
+  }
+
+  .blog-feed-section {
+    padding-top: var(--space-section);
+    padding-bottom: var(--space-section);
+  }
+
+  .blog-feed {
+    display: grid;
+    gap: 4rem;
+  }
+
+  @media (min-width: 768px) {
+    .blog-feed {
+      gap: 5rem;
+    }
+  }
+</style>
