@@ -7,7 +7,6 @@ import ProductGrid from "@/components/ProductGrid.astro";
 import TopPick from "@/components/TopPick.astro";
 import TrustBadges from "@/components/TrustBadges.astro";
 import FaqAccordion from "@/components/FaqAccordion.astro";
-import AffiliateDisclaimer from "@/components/AffiliateDisclaimer.astro";
 import PostCard from "@/components/PostCard.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { siteConfig } from "@/config/site";
@@ -122,8 +121,6 @@ const faqItens = [
   <SiteHeader posts={allPosts} />
   <main id="content">
     <Hero />
-
-    <AffiliateDisclaimer variant="banner" />
 
     <ProductGrid
       titulo="Curadoria em Destaque"
