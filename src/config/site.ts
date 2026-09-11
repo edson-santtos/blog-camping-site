@@ -1,9 +1,9 @@
 export const siteConfig = {
   name: "Diário de Mochileiro",
-  tagline: "Guia Prático de Equipamentos e Dicas de Camping",
-  title: "Diário de Mochileiro - Guia Prático de Equipamentos e Dicas de Camping",
+  tagline: "Experiências reais de quem comprou. Análises para quem ainda vai escolher.",
+  title: "Diário de Mochileiro - Equipamentos de Camping e Mochilão",
   description:
-    "Curadoria especializada de equipamentos de camping e mochilão. Análise de especificações técnicas e compilação de avaliações de compradores reais para ajudar você a escolher o melhor custo-benefício sem rasgar dinheiro.",
+    "Pesquisamos especificações, avaliações e experiências de quem já comprou para ajudar você a escolher barracas, mochilas, fogareiros e outros equipamentos para camping e mochilão.",
   siteUrl: "https://diariodemochileiro.com.br",
   authorName: "Diário de Mochileiro",
   email: "contato@diariodemochileiro.com.br",
@@ -12,7 +12,7 @@ export const siteConfig = {
   locale: "pt_BR",
   socialImage: "/og-image.png",
   about:
-    "O Diário de Mochileiro é um portal dedicado à curadoria especializada de equipamentos de camping e mochilão. Analisamos especificações técnicas, compilamos avaliações de compradores reais e selecionamos as melhores opções de custo-benefício para acampadores iniciantes e experientes.",
+    "O Diário de Mochileiro pesquisa e analisa informações de equipamentos de camping e mochilão — especificações técnicas, avaliações de compradores e experiências reais — para ajudar você a escolher o melhor antes de comprar.",
   newsletter: {
     enabled: false,
     action: "",
@@ -36,7 +36,6 @@ export const siteConfig = {
 
 export const navigation = [
   { label: "Guia", href: "/#guia-rapido" },
-  { label: "Curadoria", href: "/#curadoria" },
   { label: "Blog", href: "/posts/" },
   { label: "Quem Somos", href: "/quem-somos/" },
 ];
