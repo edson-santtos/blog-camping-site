@@ -37,13 +37,16 @@ const isCurrentPath = (href: string) =>
     </button>
 
     <a href="/" class="header-logo" aria-label="Diário de Mochileiro — Página inicial">
-      <img
-        src="/images/logo-diario-de-mochileiro.png"
-        alt="Diário de Mochileiro"
-        class="header-logo-img"
-        width="250"
-        height="auto"
-      />
+      <picture>
+        <source type="image/webp" srcset="/images/webp/logo-diario-de-mochileiro.webp" />
+        <img
+          src="/images/logo-diario-de-mochileiro.png"
+          alt="Diário de Mochileiro"
+          class="header-logo-img"
+          width="250"
+          height="auto"
+        />
+      </picture>
     </a>
 
     <nav class="header-nav hidden md:flex" aria-label="Navegação principal">
@@ -158,11 +161,14 @@ const isCurrentPath = (href: string) =>
 >
   <div class="flex items-center justify-between gap-6 border-b border-border px-6 py-4">
     <a href="/" class="header-logo" aria-label="Diário de Mochileiro">
-      <img
-        src="/images/logo-diario-de-mochileiro.png"
-        alt="Diário de Mochileiro"
-        class="mobile-logo-img"
-      />
+      <picture>
+        <source type="image/webp" srcset="/images/webp/logo-diario-de-mochileiro.webp" />
+        <img
+          src="/images/logo-diario-de-mochileiro.png"
+          alt="Diário de Mochileiro"
+          class="mobile-logo-img"
+        />
+      </picture>
     </a>
     <button type="button" class="icon-btn" data-mobile-menu-close aria-label="Fechar menu de navegação">
       <svg aria-hidden="true" class="h-5 w-5" viewBox="0 0 24 24" fill="none">
