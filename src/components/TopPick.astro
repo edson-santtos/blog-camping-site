@@ -42,7 +42,10 @@ const config = plataformaConfig[produto.plataforma];
             src={produto.imagem}
             alt={produto.nome}
             class="top-pick-image"
+            width="800"
+            height="600"
             loading="lazy"
+            decoding="async"
           />
           <span class="top-pick-category">{produto.categoria}</span>
         </div>

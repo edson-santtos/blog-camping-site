@@ -71,7 +71,10 @@ const renderStars = (rating: number) => {
                 src={produto.imagem}
                 alt={produto.nome}
                 class="product-image"
+                width="600"
+                height="450"
                 loading="lazy"
+                decoding="async"
               />
               <span class="product-category">{produto.categoria}</span>
             </div>

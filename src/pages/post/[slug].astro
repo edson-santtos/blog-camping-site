@@ -107,19 +107,19 @@ const structuredData = {
 
         {data.updatedDate && (
           <p class="meta mt-5">
-            <span>Updated <time datetime={data.updatedDate.toISOString()}>{formatDate(data.updatedDate)}</time></span>
+            <span>Atualizado em <time datetime={data.updatedDate.toISOString()}>{formatDate(data.updatedDate)}</time></span>
           </p>
         )}
 
         <div class="mt-8 flex flex-wrap items-center gap-2 border-t border-border pt-6" role="group" aria-labelledby="share-heading">
-          <h2 id="share-heading" class="eyebrow mr-1">Share</h2>
+          <h2 id="share-heading" class="eyebrow mr-1">Compartilhar</h2>
           {shareLinks.map((link) => (
             <a
               href={link.href}
               target="_blank"
               rel="noreferrer"
               class="share-btn"
-              aria-label={`Share ${data.title} on ${link.label}`}
+              aria-label={`Compartilhar ${data.title} no ${link.label}`}
             >
               <LocalIcon name={link.icon} className="h-4 w-4" />
             </a>
@@ -196,7 +196,7 @@ const structuredData = {
 
     {related.length > 0 && (
       <section class="canvas mt-[var(--space-section)]" aria-labelledby="keep-reading">
-        <h2 id="keep-reading" class="section-title">Keep reading</h2>
+        <h2 id="keep-reading" class="section-title">Continue lendo</h2>
         <div class="grid gap-7">
           {related.map((item) => <PostCard post={item} variant="compact" headingLevel="h3" />)}
         </div>
