@@ -15,61 +15,101 @@ const socials = siteConfig.socials.map((item) => ({
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="outer mt-[var(--space-section)] border-t border-border">
-  <div class="inner grid gap-10 py-12 text-center md:grid-cols-3 md:items-center md:gap-8 md:text-left">
-    <div>
-      <a href="/" class="wordmark">{siteConfig.name}</a>
-      <p class="mt-2 text-xs text-muted-foreground">
-        Pesquisa, análise e comparação de equipamentos de camping e mochilão.
-      </p>
-      <p class="mt-1 text-xs text-muted-foreground">&copy; {currentYear} Diário de Mochileiro. Todos os direitos reservados.</p>
-    </div>
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="footer-top">
+      <a href="/" class="footer-logo">
+        <img
+          src="/images/logo-diario-de-mochileiro.png"
+          alt="Diário de Mochileiro"
+          class="footer-logo-img"
+        />
+      </a>
 
-    <div class="flex flex-col items-center gap-5">
-      <ul class="flex items-center gap-2.5">
+      <ul class="footer-social">
         {
           socials.map((item) => (
             <li>
               <a
                 href={item.href}
-                class="social-btn"
+                class="footer-social-btn"
                 aria-label={item.label === "RSS" ? "Feed RSS" : `${siteConfig.name} no ${item.label}`}
                 rel={item.href.startsWith("http") ? "noreferrer" : undefined}
               >
-                <LocalIcon name={item.icon} className="h-[0.95rem] w-[0.95rem]" />
+                <LocalIcon name={item.icon} className="h-[0.9rem] w-[0.9rem]" />
               </a>
             </li>
           ))
         }
       </ul>
-
-      <nav aria-label="Navegação do rodapé">
-        <ul class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
-          {
-            footerNavigation.map((item, index) => (
-              <li class="flex items-center gap-4">
-                {index > 0 && <span class="footer-dot" aria-hidden="true" />}
-                <a href={item.href} class="nav-link">{item.label}</a>
-              </li>
-            ))
-          }
-        </ul>
-      </nav>
     </div>
 
-    <div class="flex flex-col items-center gap-2 md:items-end">
-      <p class="text-xs text-muted-foreground">
-        &copy; {currentYear} {siteConfig.name}
-      </p>
+    <nav class="footer-nav" aria-label="Navegação do rodapé">
+      {
+        footerNavigation.map((item, index) => (
+          <a
+            href={item.href}
+            class="footer-nav-link"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; {currentYear} {siteConfig.name}. Todos os direitos reservados.</p>
     </div>
   </div>
 </footer>
 
 <style>
-  .social-btn {
+  .site-footer {
+    margin-top: var(--space-section);
+    border-top: 1px solid var(--border);
+  }
+
+  .site-footer-inner {
+    max-width: var(--layout-wide);
+    margin-inline: auto;
+    padding: 2.5rem var(--gutter);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .footer-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    display: flex;
+    text-decoration: none;
+  }
+
+  .footer-logo-img {
+    width: 180px;
+    height: auto;
+    max-width: 100%;
+  }
+
+  .footer-social {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-social-btn {
     display: inline-grid;
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 2rem;
+    height: 2rem;
     place-items: center;
     border: 1px solid var(--border);
     color: var(--muted-foreground);
@@ -77,20 +117,59 @@ const currentYear = new Date().getFullYear();
     transition:
       border-color var(--duration) var(--ease-out),
       color var(--duration) var(--ease-out),
-      transform var(--duration) var(--ease-out);
+      transform var(--duration-fast) var(--ease-out);
   }
 
-  .social-btn:hover,
-  .social-btn:focus-visible {
+  .footer-social-btn:hover,
+  .footer-social-btn:focus-visible {
     border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
     color: var(--accent);
-    transform: translateY(-2px);
+    transform: translateY(-1px);
   }
 
-  .footer-dot {
-    width: 2px;
-    height: 2px;
-    background: var(--border-strong);
-    border-radius: 50%;
+  .footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem 1.5rem;
+  }
+
+  .footer-nav-link {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted-foreground);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .footer-nav-link:hover,
+  .footer-nav-link:focus-visible {
+    color: var(--foreground);
+  }
+
+  .footer-bottom {
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    width: 100%;
+    text-align: center;
+  }
+
+  .footer-copy {
+    margin: 0;
+    font-size: 0.7rem;
+    color: var(--muted-foreground);
+  }
+
+  @media (min-width: 768px) {
+    .site-footer-inner {
+      padding: 3rem var(--gutter);
+    }
+
+    .footer-logo-img {
+      width: 200px;
+    }
   }
 </style>
