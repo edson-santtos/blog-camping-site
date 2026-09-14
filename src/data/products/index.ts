@@ -9,3 +9,4 @@ export type {
 } from "./types";
 
 export { plataformaConfig } from "./types";
+export { barracas } from "./barracas";
