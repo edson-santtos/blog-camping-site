@@ -2,9 +2,7 @@
 import { type ProdutoComparacao, plataformaConfig } from "@/data/products";
 
 interface Props {
-  /** Título opcional da tabela */
   titulo?: string;
-  /** Lista de produtos para comparação (quantidade variável) */
   produtos: ProdutoComparacao[];
 }
 
@@ -16,9 +14,6 @@ const renderStars = (rating: number) => {
   const empty = 5 - full - half;
   return { full, half, empty };
 };
-
-const hasSpecs = (p: ProdutoComparacao) =>
-  p.colunaDagua || p.peso || p.capacidade || p.temperaturaMinima || p.rValue || p.lumens || p.autonomia;
 
 const getStoreLabel = (p: ProdutoComparacao) => {
   if (p.lojas && p.lojas.length > 0) {
@@ -34,8 +29,17 @@ const getStoreUrl = (p: ProdutoComparacao) => {
   if (p.lojas && p.lojas.length > 0) {
     return p.lojas[0].url;
   }
-  return p.linkAfiliado || "#";
+  return p.linkAfiliado;
 };
+
+const hasAny = (field: keyof ProdutoComparacao) =>
+  produtos.some((p) => p[field]);
+
+const hasSpecs = (field: string) =>
+  produtos.some((p) => {
+    const specs = p.especificacoes;
+    return specs && specs[field as keyof typeof specs];
+  });
 ---
 
 <div class="comparison-wrapper">
@@ -47,22 +51,45 @@ const getStoreUrl = (p: ProdutoComparacao) => {
         <tr>
           <th class="col-rank" scope="col">#</th>
           <th class="col-product" scope="col">Produto</th>
-          <th class="col-highlight" scope="col">Melhor para</th>
-          <th class="col-spec" scope="col">Peso</th>
-          <th class="col-spec" scope="col">Capacidade</th>
-          <th class="col-rating" scope="col">Avaliação</th>
-          <th class="col-cta" scope="col">Loja</th>
+          {hasAny("melhorPara") && (
+            <th class="col-highlight" scope="col">Melhor para</th>
+          )}
+          {hasAny("colunaDagua") && (
+            <th class="col-spec" scope="col">Coluna d'água</th>
+          )}
+          {hasAny("peso") && (
+            <th class="col-spec" scope="col">Peso</th>
+          )}
+          {hasAny("capacidade") && (
+            <th class="col-spec" scope="col">Capacidade</th>
+          )}
+          {hasAny("temperaturaMinima") && (
+            <th class="col-spec" scope="col">Temperatura</th>
+          )}
+          {hasAny("rValue") && (
+            <th class="col-spec" scope="col">R-Value</th>
+          )}
+          {hasAny("lumens") && (
+            <th class="col-spec" scope="col">Lumens</th>
+          )}
+          {hasAny("avaliacao") && (
+            <th class="col-rating" scope="col">Avaliação</th>
+          )}
+          {produtos.some((p) => getStoreUrl(p)) && (
+            <th class="col-cta" scope="col">Loja</th>
+          )}
         </tr>
       </thead>
       <tbody>
         {produtos.map((produto, index) => {
           const stars = produto.avaliacao ? renderStars(produto.avaliacao) : null;
+          const storeUrl = getStoreUrl(produto);
           return (
             <tr>
-              <td class="col-rank" data-label="#">
+              <td class="col-rank">
                 <span class="rank-badge">{index + 1}</span>
               </td>
-              <td class="col-product" data-label="Produto">
+              <td class="col-product">
                 <div class="product-cell">
                   {produto.imagem && (
                     <img
@@ -83,75 +110,91 @@ const getStoreUrl = (p: ProdutoComparacao) => {
                   </div>
                 </div>
               </td>
-              <td class="col-highlight" data-label="Melhor para">
-                {produto.melhorPara ? (
-                  <span class="highlight-text">{produto.melhorPara}</span>
-                ) : (
-                  <span class="empty-cell">—</span>
-                )}
-              </td>
-              <td class="col-spec" data-label="Peso">
-                {produto.peso || <span class="empty-cell">—</span>}
-              </td>
-              <td class="col-spec" data-label="Capacidade">
-                {produto.capacidade || <span class="empty-cell">—</span>}
-              </td>
-              <td class="col-rating" data-label="Avaliação">
-                {stars ? (
-                  <div class="rating-cell">
-                    <div class="stars" aria-label={`${produto.avaliacao} de 5 estrelas`}>
-                      {Array.from({ length: stars.full }).map(() => (
-                        <svg class="star filled" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                      ))}
-                      {Array.from({ length: stars.half }).map(() => (
-                        <svg class="star half" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                      ))}
-                      {Array.from({ length: stars.empty }).map(() => (
-                        <svg class="star empty" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                      ))}
+              {hasAny("melhorPara") && (
+                <td class="col-highlight">
+                  {produto.melhorPara || ""}
+                </td>
+              )}
+              {hasAny("colunaDagua") && (
+                <td class="col-spec">
+                  {produto.colunaDagua || ""}
+                </td>
+              )}
+              {hasAny("peso") && (
+                <td class="col-spec">
+                  {produto.peso || ""}
+                </td>
+              )}
+              {hasAny("capacidade") && (
+                <td class="col-spec">
+                  {produto.capacidade || ""}
+                </td>
+              )}
+              {hasAny("temperaturaMinima") && (
+                <td class="col-spec">
+                  {produto.temperaturaMinima || ""}
+                </td>
+              )}
+              {hasAny("rValue") && (
+                <td class="col-spec">
+                  {produto.rValue || ""}
+                </td>
+              )}
+              {hasAny("lumens") && (
+                <td class="col-spec">
+                  {produto.lumens || ""}
+                </td>
+              )}
+              {hasAny("avaliacao") && (
+                <td class="col-rating">
+                  {stars ? (
+                    <div class="rating-cell">
+                      <div class="stars" aria-label={`${produto.avaliacao} de 5 estrelas`}>
+                        {Array.from({ length: stars.full }).map(() => (
+                          <svg class="star filled" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                          </svg>
+                        ))}
+                        {Array.from({ length: stars.half }).map(() => (
+                          <svg class="star half" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                          </svg>
+                        ))}
+                        {Array.from({ length: stars.empty }).map(() => (
+                          <svg class="star empty" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                          </svg>
+                        ))}
+                      </div>
+                      <span class="rating-number">{produto.avaliacao?.toFixed(1)}</span>
                     </div>
-                    <span class="rating-number">{produto.avaliacao?.toFixed(1)}</span>
-                  </div>
-                ) : (
-                  <span class="empty-cell">—</span>
-                )}
-              </td>
-              <td class="col-cta" data-label="Loja">
-                {getStoreUrl(produto) !== "#" ? (
-                  <a
-                    href={getStoreUrl(produto)}
-                    class="cta-btn"
-                    target="_blank"
-                    rel="sponsored nofollow noopener"
-                  >
-                    {getStoreLabel(produto)}
-                  </a>
-                ) : (
-                  <span class="empty-cell">—</span>
-                )}
-              </td>
+                  ) : (
+                    ""
+                  )}
+                </td>
+              )}
+              {produtos.some((p) => getStoreUrl(p)) && (
+                <td class="col-cta">
+                  {storeUrl ? (
+                    <a
+                      href={storeUrl}
+                      class="cta-btn"
+                      target="_blank"
+                      rel="sponsored nofollow noopener"
+                    >
+                      {getStoreLabel(produto)}
+                    </a>
+                  ) : (
+                    ""
+                  )}
+                </td>
+              )}
             </tr>
           );
         })}
       </tbody>
     </table>
   </div>
-
-  {produtos.some(p => p.descricao) && (
-    <div class="comparison-notes">
-      {produtos.filter(p => p.descricao).map((produto) => (
-        <div class="note-item">
-          <strong>{produto.nome}:</strong> {produto.descricao}
-        </div>
-      ))}
-    </div>
-  )}
 </div>
 
 <style>
@@ -175,7 +218,7 @@ const getStoreUrl = (p: ProdutoComparacao) => {
 
   .comparison-table {
     width: 100%;
-    min-width: 640px;
+    min-width: 600px;
     border-collapse: collapse;
     font-size: 0.85rem;
     line-height: 1.5;
@@ -187,7 +230,7 @@ const getStoreUrl = (p: ProdutoComparacao) => {
   }
 
   .comparison-table th {
-    padding: 0.75rem 0.75rem;
+    padding: 0.75rem;
     font-size: 0.7rem;
     font-weight: 600;
     letter-spacing: 0.04em;
@@ -218,24 +261,25 @@ const getStoreUrl = (p: ProdutoComparacao) => {
   }
 
   .col-product {
-    min-width: 180px;
+    min-width: 160px;
   }
 
   .col-highlight {
-    min-width: 120px;
+    min-width: 110px;
   }
 
   .col-spec {
-    min-width: 70px;
+    min-width: 75px;
     text-align: center;
+    white-space: nowrap;
   }
 
   .col-rating {
-    min-width: 90px;
+    min-width: 85px;
   }
 
   .col-cta {
-    min-width: 100px;
+    min-width: 90px;
     text-align: center;
   }
 
@@ -283,17 +327,6 @@ const getStoreUrl = (p: ProdutoComparacao) => {
   .product-category {
     font-size: 0.7rem;
     color: var(--muted-foreground);
-  }
-
-  .highlight-text {
-    font-size: 0.8rem;
-    color: var(--foreground);
-    line-height: 1.4;
-  }
-
-  .empty-cell {
-    color: var(--muted-foreground);
-    opacity: 0.4;
   }
 
   .rating-cell {
@@ -348,51 +381,9 @@ const getStoreUrl = (p: ProdutoComparacao) => {
     opacity: 0.85;
   }
 
-  .comparison-notes {
-    margin-top: 1rem;
-    padding: 1rem;
-    background: var(--muted);
-    border-radius: var(--radius-md);
-    font-size: 0.8rem;
-    line-height: 1.6;
-    color: var(--muted-foreground);
-  }
-
-  .note-item {
-    margin-bottom: 0.5rem;
-  }
-
-  .note-item:last-child {
-    margin-bottom: 0;
-  }
-
-  .note-item strong {
-    color: var(--foreground);
-    font-weight: 600;
-  }
-
   @media (max-width: 640px) {
     .comparison-table {
-      min-width: 580px;
-    }
-
-    .col-highlight,
-    .col-spec {
-      display: none;
-    }
-
-    .comparison-table thead th.col-highlight,
-    .comparison-table thead th.col-spec {
-      display: none;
-    }
-
-    .comparison-table td.col-highlight,
-    .comparison-table td.col-spec {
-      display: none;
-    }
-
-    .comparison-scroll {
-      position: relative;
+      min-width: 480px;
     }
 
     .comparison-scroll::after {
