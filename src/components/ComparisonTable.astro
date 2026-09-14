@@ -1,0 +1,409 @@
+---
+import { type ProdutoComparacao, plataformaConfig } from "@/data/products";
+
+interface Props {
+  /** Título opcional da tabela */
+  titulo?: string;
+  /** Lista de produtos para comparação (quantidade variável) */
+  produtos: ProdutoComparacao[];
+}
+
+const { titulo, produtos } = Astro.props;
+
+const renderStars = (rating: number) => {
+  const full = Math.floor(rating);
+  const half = rating % 1 >= 0.5 ? 1 : 0;
+  const empty = 5 - full - half;
+  return { full, half, empty };
+};
+
+const hasSpecs = (p: ProdutoComparacao) =>
+  p.colunaDagua || p.peso || p.capacidade || p.temperaturaMinima || p.rValue || p.lumens || p.autonomia;
+
+const getStoreLabel = (p: ProdutoComparacao) => {
+  if (p.lojas && p.lojas.length > 0) {
+    return p.lojas[0].nome;
+  }
+  if (p.plataforma) {
+    return plataformaConfig[p.plataforma]?.label || "Ver produto";
+  }
+  return "Ver produto";
+};
+
+const getStoreUrl = (p: ProdutoComparacao) => {
+  if (p.lojas && p.lojas.length > 0) {
+    return p.lojas[0].url;
+  }
+  return p.linkAfiliado || "#";
+};
+---
+
+<div class="comparison-wrapper">
+  {titulo && <h3 class="comparison-title">{titulo}</h3>}
+
+  <div class="comparison-scroll">
+    <table class="comparison-table" aria-label={titulo || "Tabela comparativa de produtos"}>
+      <thead>
+        <tr>
+          <th class="col-rank" scope="col">#</th>
+          <th class="col-product" scope="col">Produto</th>
+          <th class="col-highlight" scope="col">Melhor para</th>
+          <th class="col-spec" scope="col">Peso</th>
+          <th class="col-spec" scope="col">Capacidade</th>
+          <th class="col-rating" scope="col">Avaliação</th>
+          <th class="col-cta" scope="col">Loja</th>
+        </tr>
+      </thead>
+      <tbody>
+        {produtos.map((produto, index) => {
+          const stars = produto.avaliacao ? renderStars(produto.avaliacao) : null;
+          return (
+            <tr>
+              <td class="col-rank" data-label="#">
+                <span class="rank-badge">{index + 1}</span>
+              </td>
+              <td class="col-product" data-label="Produto">
+                <div class="product-cell">
+                  {produto.imagem && (
+                    <img
+                      src={produto.imagem}
+                      alt={produto.nome}
+                      class="product-thumb"
+                      width="80"
+                      height="80"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )}
+                  <div class="product-info">
+                    <span class="product-name">{produto.nome}</span>
+                    {produto.categoria && (
+                      <span class="product-category">{produto.categoria}</span>
+                    )}
+                  </div>
+                </div>
+              </td>
+              <td class="col-highlight" data-label="Melhor para">
+                {produto.melhorPara ? (
+                  <span class="highlight-text">{produto.melhorPara}</span>
+                ) : (
+                  <span class="empty-cell">—</span>
+                )}
+              </td>
+              <td class="col-spec" data-label="Peso">
+                {produto.peso || <span class="empty-cell">—</span>}
+              </td>
+              <td class="col-spec" data-label="Capacidade">
+                {produto.capacidade || <span class="empty-cell">—</span>}
+              </td>
+              <td class="col-rating" data-label="Avaliação">
+                {stars ? (
+                  <div class="rating-cell">
+                    <div class="stars" aria-label={`${produto.avaliacao} de 5 estrelas`}>
+                      {Array.from({ length: stars.full }).map(() => (
+                        <svg class="star filled" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                      ))}
+                      {Array.from({ length: stars.half }).map(() => (
+                        <svg class="star half" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                      ))}
+                      {Array.from({ length: stars.empty }).map(() => (
+                        <svg class="star empty" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="rating-number">{produto.avaliacao?.toFixed(1)}</span>
+                  </div>
+                ) : (
+                  <span class="empty-cell">—</span>
+                )}
+              </td>
+              <td class="col-cta" data-label="Loja">
+                {getStoreUrl(produto) !== "#" ? (
+                  <a
+                    href={getStoreUrl(produto)}
+                    class="cta-btn"
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                  >
+                    {getStoreLabel(produto)}
+                  </a>
+                ) : (
+                  <span class="empty-cell">—</span>
+                )}
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+
+  {produtos.some(p => p.descricao) && (
+    <div class="comparison-notes">
+      {produtos.filter(p => p.descricao).map((produto) => (
+        <div class="note-item">
+          <strong>{produto.nome}:</strong> {produto.descricao}
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+
+<style>
+  .comparison-wrapper {
+    margin: 2rem 0;
+  }
+
+  .comparison-title {
+    margin: 0 0 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--foreground);
+  }
+
+  .comparison-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+
+  .comparison-table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .comparison-table thead {
+    background: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .comparison-table th {
+    padding: 0.75rem 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .comparison-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+    color: var(--foreground);
+  }
+
+  .comparison-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .comparison-table tbody tr:hover {
+    background: color-mix(in srgb, var(--accent) 3%, var(--background));
+  }
+
+  .col-rank {
+    width: 2.5rem;
+    text-align: center;
+  }
+
+  .col-product {
+    min-width: 180px;
+  }
+
+  .col-highlight {
+    min-width: 120px;
+  }
+
+  .col-spec {
+    min-width: 70px;
+    text-align: center;
+  }
+
+  .col-rating {
+    min-width: 90px;
+  }
+
+  .col-cta {
+    min-width: 100px;
+    text-align: center;
+  }
+
+  .rank-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+    border-radius: 50%;
+  }
+
+  .product-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .product-thumb {
+    width: 3rem;
+    height: 3rem;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+    background: var(--muted);
+    flex-shrink: 0;
+  }
+
+  .product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
+  .product-name {
+    font-weight: 600;
+    color: var(--foreground);
+    line-height: 1.3;
+  }
+
+  .product-category {
+    font-size: 0.7rem;
+    color: var(--muted-foreground);
+  }
+
+  .highlight-text {
+    font-size: 0.8rem;
+    color: var(--foreground);
+    line-height: 1.4;
+  }
+
+  .empty-cell {
+    color: var(--muted-foreground);
+    opacity: 0.4;
+  }
+
+  .rating-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+  }
+
+  .stars {
+    display: flex;
+    gap: 0.1rem;
+  }
+
+  .star {
+    width: 0.85rem;
+    height: 0.85rem;
+    color: var(--muted-foreground);
+    opacity: 0.25;
+  }
+
+  .star.filled {
+    color: #eab308;
+    opacity: 1;
+  }
+
+  .star.half {
+    color: #eab308;
+    opacity: 0.5;
+  }
+
+  .rating-number {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--muted-foreground);
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--background);
+    background: var(--foreground);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity var(--duration) var(--ease-out);
+  }
+
+  .cta-btn:hover {
+    opacity: 0.85;
+  }
+
+  .comparison-notes {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--muted);
+    border-radius: var(--radius-md);
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--muted-foreground);
+  }
+
+  .note-item {
+    margin-bottom: 0.5rem;
+  }
+
+  .note-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .note-item strong {
+    color: var(--foreground);
+    font-weight: 600;
+  }
+
+  @media (max-width: 640px) {
+    .comparison-table {
+      min-width: 580px;
+    }
+
+    .col-highlight,
+    .col-spec {
+      display: none;
+    }
+
+    .comparison-table thead th.col-highlight,
+    .comparison-table thead th.col-spec {
+      display: none;
+    }
+
+    .comparison-table td.col-highlight,
+    .comparison-table td.col-spec {
+      display: none;
+    }
+
+    .comparison-scroll {
+      position: relative;
+    }
+
+    .comparison-scroll::after {
+      content: "arraste →";
+      position: absolute;
+      bottom: 0.5rem;
+      right: 0.5rem;
+      font-size: 0.65rem;
+      color: var(--muted-foreground);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+  }
+</style>
