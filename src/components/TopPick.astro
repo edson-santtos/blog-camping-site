@@ -1,27 +1,11 @@
 ---
-export interface TopPickProps {
-  nome: string;
-  categoria: string;
-  imagem: string;
-  descricao: string;
-  pontosFortes: string[];
-  linkAfiliado: string;
-  plataforma: "Amazon" | "Shopee" | "Mercado Livre" | "Magalu" | "Outro";
-}
+import { type ProdutoTopPick, plataformaConfig } from "@/data/products";
 
 interface Props {
-  produto: TopPickProps;
+  produto: ProdutoTopPick;
 }
 
 const { produto } = Astro.props;
-
-const plataformaConfig = {
-  Amazon: { label: "Ver Melhor Preço na Amazon", class: "btn-amazon" },
-  Shopee: { label: "Ver Oferta na Shopee", class: "btn-shopee" },
-  "Mercado Livre": { label: "Ver no Mercado Livre", class: "btn-mercadolivre" },
-  Magalu: { label: "Ver na Magalu", class: "btn-magalu" },
-  Outro: { label: "Ver Oferta", class: "btn-outro" },
-};
 
 const config = plataformaConfig[produto.plataforma];
 ---
