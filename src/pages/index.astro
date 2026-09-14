@@ -2,7 +2,6 @@
 import { getCollection } from "astro:content";
 import SiteFooter from "@/components/SiteFooter.astro";
 import SiteHeader from "@/components/SiteHeader.astro";
-import Hero from "@/components/Hero.astro";
 import ProductGrid from "@/components/ProductGrid.astro";
 import TopPick from "@/components/TopPick.astro";
 import TrustBadges from "@/components/TrustBadges.astro";
@@ -89,6 +88,16 @@ const melhorCustoBeneficio = {
   plataforma: "Amazon" as const,
 };
 
+const categorias = [
+  { nome: "Barracas", slug: "barracas", icon: "M3 21V7l9-4 9 4v14M9 21V11h6v10" },
+  { nome: "Mochilas", slug: "mochilas", icon: "M4 10V4h16v6M4 10h16v10H4V10zM8 14h.01M16 14h.01" },
+  { nome: "Fogareiros", slug: "fogareiros", icon: "M12 2v6M8 8h8l-2 6H10L8 8zM10 14v4M14 14v4M6 18h12" },
+  { nome: "Iluminação", slug: "iluminacao", icon: "M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41M12 6a6 6 0 100 12 6 6 0 000-12z" },
+  { nome: "Cozinha de Camping", slug: "cozinha-de-camping", icon: "M3 12h18M3 12c0-4.97 4.03-9 9-9s9 4.03 9 9M6 12v6M18 12v6M9 12v6M15 12v6" },
+  { nome: "Sacos de Dormir", slug: "sacos-de-dormir", icon: "M4 8c0-2 2-4 8-4s8 2 8 4v8c0 2-2 4-8 4s-8-2-8-4V8zM4 8v8c0 2 2 4 8 4s8-2 8-4V8" },
+  { nome: "Isolantes Térmicos", slug: "isolantes-termicos", icon: "M4 4h16v16H4V4zM4 12h16M12 4v16" },
+];
+
 const faqItens = [
   {
     pergunta: "Como vocês escolhem os produtos para recomendar?",
@@ -120,10 +129,36 @@ const faqItens = [
 <BaseLayout title="Início" description={siteConfig.description}>
   <SiteHeader posts={allPosts} />
   <main id="content">
-    <Hero />
+
+    <section class="hero-clean">
+      <div class="hero-clean-inner">
+        <p class="hero-eyebrow">DIÁRIO DE MOCHILEIRO</p>
+        <h1 class="hero-title">Equipamentos para camping e mochilão</h1>
+        <p class="hero-subtitle">Análises, comparativos e experiências de compradores.</p>
+        <a href="#curadoria" class="hero-btn">Explorar equipamentos</a>
+      </div>
+    </section>
+
+    <section class="categories-section outer">
+      <div class="inner">
+        <h2 class="section-title">Explore por categoria</h2>
+        <div class="categories-grid">
+          {categorias.map((cat) => (
+            <a href={`/category/${cat.slug}/`} class="category-card">
+              <div class="category-icon-wrapper">
+                <svg class="category-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d={cat.icon} />
+                </svg>
+              </div>
+              <span class="category-name">{cat.nome}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
 
     <ProductGrid
-      titulo="Recomendações em Destaque"
+      titulo="Equipamentos em destaque"
       subtitulo="Analisamos especificações técnicas e avaliações de compradores reais para recomendar os melhores equipamentos de camping."
       produtos={produtosDestaque}
     />
@@ -220,6 +255,136 @@ const faqItens = [
 </BaseLayout>
 
 <style>
+  .hero-clean {
+    padding: 3rem 1.5rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-clean-inner {
+    max-width: 42rem;
+    margin: 0 auto;
+  }
+
+  .hero-eyebrow {
+    margin: 0 0 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .hero-title {
+    margin: 0 0 0.75rem;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--foreground);
+  }
+
+  .hero-subtitle {
+    margin: 0 0 1.5rem;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--muted-foreground);
+  }
+
+  .hero-btn {
+    display: inline-block;
+    padding: 0.7rem 1.75rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--background);
+    background: var(--foreground);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: opacity var(--duration) var(--ease-out);
+  }
+
+  .hero-btn:hover {
+    opacity: 0.85;
+  }
+
+  @media (min-width: 768px) {
+    .hero-clean {
+      padding: 4rem 2rem;
+    }
+
+    .hero-title {
+      font-size: 2.75rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+    }
+  }
+
+  .categories-section {
+    padding-top: var(--space-section);
+    padding-bottom: var(--space-section);
+  }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .categories-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .categories-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .category-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1.25rem 0.75rem;
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: border-color var(--duration) var(--ease-out), background var(--duration) var(--ease-out);
+  }
+
+  .category-card:hover {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 4%, var(--background));
+  }
+
+  .category-icon-wrapper {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+    border-radius: var(--radius-sm);
+  }
+
+  .category-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--accent);
+  }
+
+  .category-name {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--foreground);
+    text-align: center;
+    line-height: 1.3;
+  }
+
   .guide-section {
     padding-top: var(--space-section);
     padding-bottom: var(--space-section);
