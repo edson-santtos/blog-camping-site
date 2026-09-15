@@ -45,26 +45,28 @@ const renderStars = (rating: number) => {
             <div class="product-body">
               <h3 class="product-name">{produto.nome}</h3>
               <p class="product-highlight">{produto.destaque}</p>
-              <div class="product-rating">
-                <div class="stars" aria-label={`${produto.avaliacao} de 5 estrelas`}>
-                  {Array.from({ length: stars.full }).map(() => (
-                    <svg class="star filled" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                    </svg>
-                  ))}
-                  {Array.from({ length: stars.half }).map(() => (
-                    <svg class="star half" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                    </svg>
-                  ))}
-                  {Array.from({ length: stars.empty }).map(() => (
-                    <svg class="star empty" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                    </svg>
-                  ))}
+              {produto.avaliacao != null && (
+                <div class="product-rating">
+                  <div class="stars" aria-label={`${produto.avaliacao} de 5 estrelas`}>
+                    {Array.from({ length: stars.full }).map(() => (
+                      <svg class="star filled" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                      </svg>
+                    ))}
+                    {Array.from({ length: stars.half }).map(() => (
+                      <svg class="star half" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                      </svg>
+                    ))}
+                    {Array.from({ length: stars.empty }).map(() => (
+                      <svg class="star empty" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                      </svg>
+                    ))}
+                  </div>
+                  <span class="rating-text">{produto.avaliacao.toFixed(1)}</span>
                 </div>
-                <span class="rating-text">{produto.avaliacao.toFixed(1)}</span>
-              </div>
+              )}
               <a
                 href={produto.linkAfiliado}
                 class={`affiliate-btn ${config.class}`}
