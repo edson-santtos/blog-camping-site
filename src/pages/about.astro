@@ -11,51 +11,51 @@ const authors = getAllAuthors(allPosts);
 ---
 
 <BaseLayout
-  title="About"
-  description={`About ${siteConfig.name} — what it publishes and who writes it.`}
+  title="Quem Somos"
+  description={`Sobre o ${siteConfig.name} — o que publica e quem escreve.`}
 >
   <SiteHeader posts={allPosts} />
   <main id="content" class="outer">
     <div class="canvas">
       <header class="pagehead">
-        <p class="eyebrow">About</p>
+        <p class="eyebrow">Sobre</p>
         <h1 class="pagehead-title">{siteConfig.name}</h1>
         <p class="pagehead-description">{siteConfig.about}</p>
       </header>
 
       <div class="prose">
-        <h2>What gets published here</h2>
+        <h2>O que é publicado aqui</h2>
         <p>
-          Long-form notes on building software: the decision behind a change, what it cost, and what
-          would be done differently next time. Posts are written to be read once, carefully, rather
-          than skimmed.
+          Análises detalhadas sobre equipamentos de camping e mochilão: as decisões por trás de uma
+          indicação, o que pesamos e o que seria feito de forma diferente. Os artigos são escritos
+          para serem lidos com atenção, não apenas skimmados.
         </p>
 
-        <h2>How it is written</h2>
+        <h2>Como é escrito</h2>
         <p>
-          Every post aims to be reproducible and honest about trade-offs. If something did not work,
-          that goes in too. Corrections are made in place, with the update date shown at the top of
-          the post.
+          Cada artigo busca ser reprodutível e honesto sobre trade-offs. Se algo não funcionou,
+          isso também entra. Correções são feitas no local, com a data de atualização exibida no
+          início do artigo.
         </p>
 
-        <h2>Who writes it</h2>
+        <h2>Quem escreve</h2>
         <ul>
           {
             authors.map((author) => (
               <li>
-                <a href={`/author/${authorSlug(author.name)}/`}>{author.name}</a> — {author.role} ({author.posts.length} {author.posts.length === 1 ? "post" : "posts"})
+                <a href={`/author/${authorSlug(author.name)}/`}>{author.name}</a> — {author.role} ({author.posts.length} {author.posts.length === 1 ? "artigo" : "artigos"})
               </li>
             ))
           }
         </ul>
 
-        <h2>Get in touch</h2>
+        <h2>Entre em contato</h2>
         <p>
-          Questions, corrections, and requests are welcome through the <a href="/contact/">contact page</a>.
+          Dúvidas, correções e solicitações são bem-vindas pela <a href="/contact/">página de contato</a>.
         </p>
         {
           siteConfig.email && (
-            <p>You can also email <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a> directly.</p>
+            <p>Você também pode enviar um e-mail diretamente para <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>.</p>
           )
         }
       </div>

@@ -88,7 +88,7 @@ const schema = structuredData ?? defaultStructuredData;
           const isDark = theme === "dark";
           document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
             button.setAttribute("aria-checked", String(isDark));
-            button.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+            button.setAttribute("aria-label", isDark ? "Alternar para modo claro" : "Alternar para modo escuro");
           });
         };
 
@@ -129,7 +129,7 @@ const schema = structuredData ?? defaultStructuredData;
     </script>
   </head>
   <body>
-    <a class="skip-link" href="#content">Skip to content</a>
+    <a class="skip-link" href="#content">Ir para o conteúdo</a>
     <slot />
   </body>
 </html>

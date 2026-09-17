@@ -7,10 +7,10 @@ interface Props {
 const { type = "note", title } = Astro.props;
 
 const defaultTitles: Record<NonNullable<Props["type"]>, string> = {
-  note: "Note",
-  tip: "Tip",
-  warning: "Warning",
-  danger: "Important",
+  note: "Nota",
+  tip: "Dica",
+  warning: "Aviso",
+  danger: "Importante",
 };
 
 const heading = title ?? defaultTitles[type];

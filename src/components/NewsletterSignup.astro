@@ -24,19 +24,19 @@ const isDemo = isEnabled && action.length === 0;
     method={newsletter.method}
     data-newsletter-form={isDemo ? "" : undefined}
   >
-    <label class="sr-only" for="newsletter-email">Email address</label>
+    <label class="sr-only" for="newsletter-email">Endereço de e-mail</label>
     <input
       id="newsletter-email"
       required
       type="email"
       name={newsletter.emailFieldName}
       autocomplete="email"
-      placeholder="you@example.com"
+      placeholder="seu@email.com"
       disabled={!isEnabled}
       class="field"
     />
     <button type="submit" disabled={!isEnabled} class="btn btn-solid btn-block">
-      {isEnabled ? "Subscribe" : "Coming soon"}
+      {isEnabled ? "Inscrever-se" : "Em breve"}
     </button>
     <p
       class="newsletter-status text-xs leading-relaxed text-muted-foreground"
@@ -47,7 +47,7 @@ const isDemo = isEnabled && action.length === 0;
     </p>
     {!isEnabled && (
       <p class="text-xs leading-relaxed text-muted-foreground">
-        Signup is disabled until a newsletter provider is configured.
+        A inscrição está desativada até que um provedor de newsletter seja configurado.
       </p>
     )}
   </form>
@@ -62,7 +62,7 @@ const isDemo = isEnabled && action.length === 0;
           const status = form.querySelector("[data-newsletter-status]");
           if (status) {
             status.textContent =
-              "Thanks. This demo form is not connected to a provider yet, so nothing was sent.";
+              "Obrigado. Este formulário de demonstração ainda não está conectado a um provedor, então nada foi enviado.";
           }
           form.reset();
         });

@@ -12,18 +12,18 @@ const categoryList = getCategoryList(allPosts);
 ---
 
 <BaseLayout
-  title="Categories"
-  description={`Every category on ${siteConfig.name}, with post counts.`}
+  title="Categorias"
+  description={`Todas as categorias do ${siteConfig.name}, com contagem de artigos.`}
 >
   <SiteHeader posts={allPosts} />
   <main id="content" class="outer">
     <div class="canvas">
       <header class="pagehead">
-        <p class="eyebrow">Index</p>
-        <h1 class="pagehead-title">Categories</h1>
+        <p class="eyebrow">Índice</p>
+        <h1 class="pagehead-title">Categorias</h1>
         <p class="pagehead-description">
-          {allPosts.length} posts, filed under {categoryList.length}
-          {categoryList.length === 1 ? "category" : "categories"}.
+          {allPosts.length} artigos, divididos em {categoryList.length}
+          {categoryList.length === 1 ? "categoria" : "categorias"}.
         </p>
       </header>
 
@@ -35,7 +35,7 @@ const categoryList = getCategoryList(allPosts);
                 <span class="flex items-baseline justify-between gap-4">
                   <span class="link-title__text text-xl font-semibold tracking-tight">{category.name}</span>
                   <span class="pill shrink-0">
-                    {category.count} {category.count === 1 ? "post" : "posts"}
+                    {category.count} {category.count === 1 ? "artigo" : "artigos"}
                   </span>
                 </span>
                 <span class="mt-2 block max-w-2xl text-pretty text-sm leading-relaxed text-muted-foreground">

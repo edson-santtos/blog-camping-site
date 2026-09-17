@@ -117,7 +117,7 @@
     if (panels.length < 2) return;
 
     const tabs: HTMLButtonElement[] = panels.map((panel, index) => {
-      const label = panel.getAttribute("data-code-tab-label") || `Option ${index + 1}`;
+      const label = panel.getAttribute("data-code-tab-label") || `Opção ${index + 1}`;
       const tabId = `${groupId}-tab-${index}`;
       const panelId = `${groupId}-panel-${index}`;
 

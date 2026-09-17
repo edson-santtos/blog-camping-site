@@ -91,8 +91,8 @@ const structuredData = {
     <article>
       <header class="canvas pt-10 md:pt-14">
         <p class="meta post-meta">
-          <span class="post-meta__byline">
-            By <a href={authorHref} class="link-sweep post-meta__link">{data.author.name}</a> in{" "}
+            <span class="post-meta__byline">
+              Por <a href={authorHref} class="link-sweep post-meta__link">{data.author.name}</a> em{" "}
             <a href={categoryHref(data.category)} class="link-sweep post-meta__link">{data.category}</a>
           </span>
           <span class="post-meta__dates">
@@ -128,7 +128,7 @@ const structuredData = {
             class="share-btn"
             data-copy-link
             data-copy-url={articleUrl}
-            aria-label={`Copy link to ${data.title}`}
+            aria-label={`Copiar link de ${data.title}`}
           >
             <LocalIcon name="link-45deg" className="h-4 w-4" />
           </button>
@@ -172,7 +172,7 @@ const structuredData = {
               {older && (
                 <a href={postHref(older)} class="link-title link-nudge">
                   <span class="eyebrow">
-                    <span class="link-nudge__arrow link-nudge__arrow--prev">&larr;</span> Previous
+                    <span class="link-nudge__arrow link-nudge__arrow--prev">&larr;</span> Anterior
                   </span>
                   <span class="link-title__text mt-2 block font-semibold leading-snug">{older.data.title}</span>
                 </a>
@@ -182,7 +182,7 @@ const structuredData = {
               {newer && (
                 <a href={postHref(newer)} class="link-title link-nudge">
                   <span class="eyebrow">
-                    Next <span class="link-nudge__arrow link-nudge__arrow--next">&rarr;</span>
+                    Próximo <span class="link-nudge__arrow link-nudge__arrow--next">&rarr;</span>
                   </span>
                   <span class="link-title__text mt-2 block font-semibold leading-snug">{newer.data.title}</span>
                 </a>
@@ -215,9 +215,9 @@ const structuredData = {
         try {
           if (!navigator.clipboard?.writeText) throw new Error("Clipboard API unavailable");
           await navigator.clipboard.writeText(url);
-          if (status) status.textContent = "Link copied";
+          if (status) status.textContent = "Link copiado";
         } catch {
-          if (status) status.textContent = "Copy failed";
+          if (status) status.textContent = "Falha ao copiar";
         }
       });
     });
@@ -237,7 +237,7 @@ const structuredData = {
       button.type = "button";
       button.className = "code-copy-button";
       button.setAttribute("aria-describedby", labelId);
-      button.textContent = "Copy";
+      button.textContent = "Copiar";
       liveRegion.id = labelId;
       liveRegion.className = "sr-only";
       liveRegion.setAttribute("aria-live", "polite");
@@ -249,14 +249,14 @@ const structuredData = {
         try {
           if (!navigator.clipboard?.writeText) throw new Error("Clipboard API unavailable");
           await navigator.clipboard.writeText(code?.textContent ?? pre.textContent ?? "");
-          button.textContent = "Copied";
-          liveRegion.textContent = "Code copied";
+          button.textContent = "Copiado";
+          liveRegion.textContent = "Código copiado";
         } catch {
-          button.textContent = "Failed";
-          liveRegion.textContent = "Copy failed";
+          button.textContent = "Falhou";
+          liveRegion.textContent = "Falha ao copiar";
         }
         window.setTimeout(() => {
-          button.textContent = "Copy";
+          button.textContent = "Copiar";
         }, 1800);
       });
     });
