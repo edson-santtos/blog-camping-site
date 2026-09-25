@@ -152,6 +152,9 @@ export interface ProdutoComparacao extends ProdutoBase {
 
   /** Lojas disponíveis */
   lojas?: LojaAfiliado[];
+
+  /** ID customizado para âncora (usado no ComparisonTable) */
+  anchorId?: string;
 }
 
 /**

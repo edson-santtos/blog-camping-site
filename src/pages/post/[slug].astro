@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
+import Breadcrumb from "@/components/Breadcrumb.astro";
 import LocalIcon from "@/components/LocalIcon.astro";
 import PostCard from "@/components/PostCard.astro";
 import SiteFooter from "@/components/SiteFooter.astro";
@@ -39,8 +40,10 @@ const { post, allPosts } = Astro.props;
 const { Content } = await render(post);
 const mdxComponents = { Callout, CodeGroup, CodeGroupItem };
 const data = post.data;
-const related = getRelated(allPosts, post);
 const { newer, older } = getAdjacent(allPosts, post);
+const related = getRelated(allPosts, post).filter(
+  (r) => r.id !== newer?.id && r.id !== older?.id
+);
 const authorHref = `/author/${authorSlug(data.author.name)}/`;
 const articleUrl = new URL(postHref(post), siteConfig.siteUrl).toString();
 const socialImage = data.cover
@@ -90,6 +93,8 @@ const structuredData = {
   <main id="content" class="outer">
     <article>
       <header class="canvas pt-10 md:pt-14">
+        <Breadcrumb categoria={data.category} titulo={data.title} />
+
         <p class="meta post-meta">
             <span class="post-meta__byline">
               Por <a href={authorHref} class="link-sweep post-meta__link">{data.author.name}</a> em{" "}

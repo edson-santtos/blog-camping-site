@@ -1,0 +1,50 @@
+---
+import { categorySlug } from "@/config/categories";
+
+interface Props {
+  categoria: string;
+  titulo: string;
+}
+
+const { categoria, titulo } = Astro.props;
+const catSlug = categorySlug(categoria);
+---
+
+<nav aria-label="Breadcrumb" class="breadcrumb">
+  <a href="/" class="breadcrumb-link">Home</a>
+  <span class="breadcrumb-sep">›</span>
+  <a href={`/category/${catSlug}/`} class="breadcrumb-link">{categoria}</a>
+  <span class="breadcrumb-sep">›</span>
+  <span class="breadcrumb-current">{titulo}</span>
+</nav>
+
+<style>
+  .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
+    font-size: 0.8125rem;
+    color: var(--muted-foreground);
+  }
+
+  .breadcrumb-link {
+    color: var(--muted-foreground);
+    text-decoration: none;
+  }
+
+  .breadcrumb-link:hover {
+    text-decoration: underline;
+    color: var(--foreground);
+  }
+
+  .breadcrumb-sep {
+    color: var(--muted-foreground);
+    opacity: 0.6;
+  }
+
+  .breadcrumb-current {
+    color: var(--foreground);
+  }
+</style>
