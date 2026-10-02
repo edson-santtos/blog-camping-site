@@ -112,6 +112,47 @@
   --danger: #f87171;
 }
 
+.btn-amazon,
+.btn-shopee,
+.btn-mercadolivre,
+.btn-magalu,
+.btn-outro,
+.btn-afiliado {
+  background-color: #dc2626;
+  color: #ffffff;
+}
+
+.btn-amazon:hover,
+.btn-shopee:hover,
+.btn-mercadolivre:hover,
+.btn-magalu:hover,
+.btn-outro:hover,
+.btn-afiliado:hover {
+  background-color: #b91c1c;
+}
+
+.btn-afiliado {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.btn-afiliado:hover {
+  text-decoration: none;
+}
+
+.cta-btn {
+  background-color: #dc2626;
+  color: #ffffff;
+}
+
+.cta-btn:hover {
+  background-color: #b91c1c;
+}
+
 /* -------------------------------------------------------------------- base --- */
 
 @layer base {

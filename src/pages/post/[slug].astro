@@ -114,31 +114,6 @@ const structuredData = {
             <span>Atualizado em <time datetime={data.updatedDate.toISOString()}>{formatDate(data.updatedDate)}</time></span>
           </p>
         )}
-
-        <div class="mt-8 flex flex-wrap items-center gap-2 border-t border-border pt-6" role="group" aria-labelledby="share-heading">
-          <h2 id="share-heading" class="eyebrow mr-1">Compartilhar</h2>
-          {shareLinks.map((link) => (
-            <a
-              href={link.href}
-              target="_blank"
-              rel="noreferrer"
-              class="share-btn"
-              aria-label={`Compartilhar ${data.title} no ${link.label}`}
-            >
-              <LocalIcon name={link.icon} className="h-4 w-4" />
-            </a>
-          ))}
-          <button
-            type="button"
-            class="share-btn"
-            data-copy-link
-            data-copy-url={articleUrl}
-            aria-label={`Copiar link de ${data.title}`}
-          >
-            <LocalIcon name="link-45deg" className="h-4 w-4" />
-          </button>
-          <p class="ml-1 text-xs text-muted-foreground" aria-live="polite" data-copy-status></p>
-        </div>
       </header>
 
       {data.cover && (
@@ -168,6 +143,31 @@ const structuredData = {
 
       <div class="prose canvas mt-12">
         <Content components={mdxComponents} />
+      </div>
+
+      <div class="mt-8 flex flex-wrap items-center gap-2 border-t border-border pt-6" role="group" aria-labelledby="share-heading">
+        <h2 id="share-heading" class="eyebrow mr-1">Compartilhar</h2>
+        {shareLinks.map((link) => (
+          <a
+            href={link.href}
+            target="_blank"
+            rel="noreferrer"
+            class="share-btn"
+            aria-label={`Compartilhar ${data.title} no ${link.label}`}
+          >
+            <LocalIcon name={link.icon} className="h-4 w-4" />
+          </a>
+        ))}
+        <button
+          type="button"
+          class="share-btn"
+          data-copy-link
+          data-copy-url={articleUrl}
+          aria-label={`Copiar link de ${data.title}`}
+        >
+          <LocalIcon name="link-45deg" className="h-4 w-4" />
+        </button>
+        <p class="ml-1 text-xs text-muted-foreground" aria-live="polite" data-copy-status></p>
       </div>
 
       {(newer || older) && (

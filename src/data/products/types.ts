@@ -169,27 +169,27 @@ export interface PlataformaConfig {
 
 export const plataformaConfig: Record<PlataformaAfiliado, PlataformaConfig> = {
   Amazon: {
-    label: "Ver Preço na Amazon",
+    label: "Ver preço",
     class: "btn-amazon",
     icon: "M18.15 15.45c-.45.45-1.05.68-1.8.68-1.1 0-1.95-.35-2.55-1.05l1.35-1.05c.3.35.7.5 1.2.5.5 0 .9-.15 1.2-.45.3-.3.45-.7.45-1.2 0-.5-.15-.9-.5-1.2-.3-.3-.75-.5-1.35-.5-.6 0-1.1.2-1.5.55L12 8.85c.55-.5 1.3-.75 2.2-.75 1.05 0 1.85.3 2.4.9.55.6.85 1.4.85 2.4 0 .75-.2 1.35-.6 1.75-.25.25-.45.4-.7.55zM5.65 10.5h2.1v5.4H9.3v-5.4h2.1V9.3H5.65v1.2z",
   },
   Shopee: {
-    label: "Ver Oferta na Shopee",
+    label: "Ver preço",
     class: "btn-shopee",
     icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z",
   },
   "Mercado Livre": {
-    label: "Ver no Mercado Livre",
+    label: "Ver preço",
     class: "btn-mercadolivre",
     icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z",
   },
   Magalu: {
-    label: "Ver na Magalu",
+    label: "Ver preço",
     class: "btn-magalu",
     icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z",
   },
   Outro: {
-    label: "Ver Oferta",
+    label: "Ver preço",
     class: "btn-outro",
     icon: "M18 13h-5v5h-2v-5H6v-2h5V6h2v5h5v2z",
   },
