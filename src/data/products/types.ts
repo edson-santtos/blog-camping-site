@@ -135,6 +135,12 @@ export interface ProdutoComparacao extends ProdutoBase {
   /** Temperatura mínima (sacos de dormir) */
   temperaturaMinima?: string;
 
+  /** Tecnologia de refrigeração (geladeiras portáteis) */
+  tecnologia?: string;
+
+  /** Fontes de alimentação (ex: "12/24V + 110/220V") */
+  alimentacao?: string;
+
   /** R-Value (isolantes térmicos) */
   rValue?: string;
 

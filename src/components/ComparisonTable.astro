@@ -54,10 +54,12 @@ const allFields: FieldDescriptor[] = [
   { key: "colunaDagua", label: "Coluna d'água" },
   { key: "peso", label: "Peso" },
   { key: "capacidade", label: "Capacidade" },
-  { key: "temperaturaMinima", label: "Temperatura" },
+  { key: "temperaturaMinima", label: "Temperatura mínima" },
   { key: "rValue", label: "R-Value" },
   { key: "lumens", label: "Lumens" },
   { key: "autonomia", label: "Autonomia" },
+  { key: "tecnologia", label: "Tecnologia" },
+  { key: "alimentacao", label: "Alimentação" },
 ];
 
 const activeFields = allFields.filter((f) => produtos.some((p) => p[f.key]));

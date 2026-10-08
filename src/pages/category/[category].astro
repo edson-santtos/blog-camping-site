@@ -19,7 +19,6 @@ export async function getStaticPaths() {
   const allPosts = visiblePosts(await getCollection("posts"));
 
   return categories
-    .filter((category) => getPostsByCategory(allPosts, category).length > 0)
     .map((category) => ({
       params: { category: categorySlug(category) },
       props: { category, allPosts },
@@ -36,7 +35,7 @@ const posts = getPostsByCategory(allPosts, category);
 const description = categoryDescriptions[category];
 ---
 
-<BaseLayout title={category} description={`${description} Artigos no ${siteConfig.name} em ${category}.`}>
+<BaseLayout title={category} description={`${description} Artigos no ${siteConfig.name} em ${category}.`} noindex={posts.length === 0}>
   <SiteHeader posts={allPosts} />
   <main id="content" class="outer">
     <div class="canvas">

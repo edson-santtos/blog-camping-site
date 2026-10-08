@@ -10,3 +10,4 @@ export type {
 
 export { plataformaConfig } from "./types";
 export { barracas } from "./barracas";
+export { geladeiras } from "./geladeiras";

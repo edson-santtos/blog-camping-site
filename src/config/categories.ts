@@ -1,10 +1,9 @@
 export const categories = [
-  "Mochilas",
   "Barracas",
-  "Sacos de Dormir",
-  "Isolamentos Térmicos",
-  "Cantil e Panelas",
-  "Lanterna e Iluminação",
+  "Cozinha de Camping",
+  "Dormir",
+  "Mochilas e Transporte",
+  "Energia e Iluminação",
 ] as const;
 
 export type Category = (typeof categories)[number];
@@ -19,10 +18,9 @@ export const categorySlug = (category: string) =>
     .replace(/\s+/g, "-");
 
 export const categoryDescriptions: Record<Category, string> = {
-  Mochilas: "Análise de capacidade, coluna d'água, tecidos ripstop e sistemas de costela para mochilões de todos os tamanhos.",
   Barracas: "Resistência ao vento, impermeabilidade, peso e facilidade de montagem para acampamentos e trekking.",
-  "Sacos de Dormir": "Temperatura de conforto, isolamento sintético vs. Down, peso e volume para noites sob as estrelas.",
-  "Isolamentos Térmicos": "R-values, espessuras e materiais de isolamento para dormir com conforto em qualquer terreno.",
-  "Cantil e Panelas": "Materiais leves, durabilidade e funcionalidade para cozinha de trilha e acampamento.",
-  "Lanterna e Iluminação": "Lumens, autonomia de bateria, resistência à água e tipos de iluminação para acampamento.",
+  "Cozinha de Camping": "Geladeiras portáteis, fogareiros, utensílios e tudo para comer e beber bem no acampamento ou na estrada.",
+  Dormir: "Sacos de dormir, isolantes térmicos e conforto para a noite no acampamento.",
+  "Mochilas e Transporte": "Mochilas, cargueiras, sacos estanques e tudo para levar sua carga.",
+  "Energia e Iluminação": "Lanternas, lanternas de cabeça, estações de energia e energia solar para acampar fora da rede.",
 };
