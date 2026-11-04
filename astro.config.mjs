@@ -18,7 +18,16 @@ export default defineConfig({
   site: siteConfig.siteUrl,
   integrations: [
     sitemap({
-      filter: (page) => page !== new URL("/search/", siteConfig.siteUrl).toString(),
+      filter: (page) =>
+        ![
+          "/search/",
+          "/author/",
+          "/category/dormir/",
+          "/category/energia-e-iluminacao/",
+          "/category/mochilas-e-transporte/",
+        ]
+          .map((path) => new URL(path, siteConfig.siteUrl).toString())
+          .includes(page),
     }),
     mdx(),
   ],

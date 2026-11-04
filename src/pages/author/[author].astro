@@ -24,6 +24,7 @@ const { author, allPosts } = Astro.props;
 const posts = visiblePosts(allPosts).filter(
   (post) => authorSlug(post.data.author.name) === author.slug,
 );
+const totalAuthors = getAllAuthors(allPosts).length;
 ---
 
 <BaseLayout
@@ -45,7 +46,9 @@ const posts = visiblePosts(allPosts).filter(
         {posts.map((post) => <PostCard post={post} />)}
       </div>
 
-      <a href="/author/" class="btn btn-outline btn-block mt-16">Todos os autores</a>
+      {totalAuthors > 1 && (
+        <a href="/author/" class="btn btn-outline btn-block mt-16">Todos os autores</a>
+      )}
     </div>
   </main>
   <SiteFooter />
